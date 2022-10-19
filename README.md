@@ -10,7 +10,7 @@
 |类型|方案|格式|备注|
 |-|-|-|-|
 |PDF文档|[pdf.js](https://github.com/mozilla/pdf.js) / [vue-pdf-embed](https://github.com/hrynko/vue-pdf-embed)|pdf|支持有密码文件|
-|Office文档|LibreOffice转换成pdf / [Office365](https://www.microsoft.com/en-us/microsoft-365/blog/2013/04/10/office-web-viewer-view-office-documents-in-a-browser/?eu=true) / [CKEditor](https://ckeditor.com/docs/ckeditor5/latest/examples/builds/document-editor.html)|docx、pptx、xlsx等|LibreOffice字体问题；有密码文档问题|
+|Office文档|LibreOffice转换成pdf / [Office365](https://www.microsoft.com/en-us/microsoft-365/blog/2013/04/10/office-web-viewer-view-office-documents-in-a-browser/?eu=true) / [CKEditor](https://ckeditor.com/docs/ckeditor5/latest/examples/builds/document-editor.html) / [PPTist](https://github.com/pipipi-pikachu/PPTist) |docx、pptx、xlsx等|LibreOffice字体问题；有密码文档问题；CKEditor/PPTist支持编辑|
 |CAD文档|工具转换成pdf|dwg、dwt等|
 |文本文档|转pdf|txt、json/toml/yml/config/xml等|enca/file检测编码防止中文乱码|
 |代码文档|md代码染色|cpp/c/h/java/py/go/php/js/html/css等|enca/file检测编码防止中文乱码|
