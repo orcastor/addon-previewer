@@ -6,7 +6,7 @@
 import { ref, shallowRef, watch, defineAsyncComponent, Component } from 'vue';
 import qs from 'qs';
 import none from '@/comps/None.vue';
-import pdf from '@/comps/Pdf.vue';
+import doc from '@/comps/Doc.vue';
 const comp = shallowRef(none);
 
 const init = () => {
@@ -14,7 +14,7 @@ const init = () => {
   console.log(query);
   switch (query.t) {
   case 'pdf':
-    comp.value = pdf;
+    comp.value = doc;
     break;
   default:
     comp.value = none;
