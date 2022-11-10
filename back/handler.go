@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/url"
 	"strconv"
+	"strings"
 
 	"github.com/orcastor/orcas/core"
 	"github.com/orcastor/orcas/rpc/util"
@@ -62,6 +63,8 @@ func get(ctx *gin.Context) {
 	ctx.Header("Content-Type", "application/octet-stream")
 	ctx.Header("Content-Disposition", fmt.Sprintf("attachment; filename*=utf-8''%s", url.QueryEscape(o[0].Name)))
 
+	acceptEncoding := ctx.Request.Header["Accept-Encoding"]
+
 	var decmpr archiver.Decompressor
 	if d.Kind&core.DATA_CMPR_MASK != 0 {
 		if d.Kind&core.DATA_CMPR_SNAPPY != 0 {
@@ -69,7 +72,21 @@ func get(ctx *gin.Context) {
 		} else if d.Kind&core.DATA_CMPR_ZSTD != 0 {
 			decmpr = &archiver.Zstd{}
 		} else if d.Kind&core.DATA_CMPR_GZIP != 0 {
-			decmpr = &archiver.Gz{}
+			if len(acceptEncoding) > 0 && strings.Contains(acceptEncoding[0], "gzip") {
+				// 如果浏览器支持gzip，直接返回原始数据
+				decmpr = &sdk.DummyArchiver{}
+				ctx.Header("Content-Encoding", "gzip")
+			} else {
+				decmpr = &archiver.Gz{}
+			}
+		} else if d.Kind&core.DATA_CMPR_BR != 0 {
+			if len(acceptEncoding) > 0 && strings.Contains(acceptEncoding[0], "br") {
+				// 如果浏览器支持br，直接返回原始数据
+				decmpr = &sdk.DummyArchiver{}
+				ctx.Header("Content-Encoding", "br")
+			} else {
+				decmpr = &archiver.Brotli{}
+			}
 		}
 	} else {
 		decmpr = &sdk.DummyArchiver{}
