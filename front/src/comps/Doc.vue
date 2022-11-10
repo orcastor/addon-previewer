@@ -6,12 +6,18 @@
 
 <script setup lang="ts">
 import VuePdfEmbed from 'vue-pdf-embed';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, defineProps } from 'vue';
+import { store } from "@/store";
+
+const props = defineProps<{
+    query?:string
+}>()
 const isLoading = ref(true);
 const pdfSource = ref('');
 
 onMounted(() => {
-  pdfSource.value = '//raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf';
+  console.log();
+  pdfSource.value = '//' + location.host + '/prvw/api/get?' + props.query + '&token=' + store.token;
 });
 
 const rendered = ()=> {
