@@ -8,6 +8,7 @@ import qs from 'qs';
 import none from '@/comps/None.vue';
 import doc from '@/comps/Doc.vue';
 import img from '@/comps/Img.vue';
+import xlsx from '@/comps/Xlsx.vue';
 const comp = shallowRef(none);
 const query = ref('');
 
@@ -31,6 +32,9 @@ const init = () => {
   case 'tiff':
   case 'webp':
     comp.value = img;
+    break;
+  case 'xlsx':
+    comp.value = xlsx;
     break;
   default:
     comp.value = none;

@@ -18,7 +18,7 @@ const props = defineProps<{
     query?:string
 }>()
 
-const url = '//' + location.host + '/prvw/api/get?' + props.query + '&token=' + store.token;
+const url = `//${location.host}/prvw/api/get?${props.query}&token=${store.token}`;
 const srcList = [ url ]
 </script>
 

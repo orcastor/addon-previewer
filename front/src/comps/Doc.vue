@@ -16,8 +16,7 @@ const isLoading = ref(true);
 const pdfSource = ref('');
 
 onMounted(() => {
-  console.log();
-  pdfSource.value = '//' + location.host + '/prvw/api/get?' + props.query + '&token=' + store.token;
+  pdfSource.value = `//${location.host}/prvw/api/get?${props.query}&token=${store.token}`;
 });
 
 const rendered = ()=> {
