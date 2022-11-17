@@ -33,6 +33,7 @@ const init = () => {
   case 'webp':
     comp.value = img;
     break;
+  case 'csv':
   case 'xlsx':
     comp.value = xlsx;
     break;
