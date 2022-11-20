@@ -1,13 +1,24 @@
 <template v-loading="isLoading" class="app">
-  <div class="app-content" id="result" />
+  <div id="luckysheet" />
 </template>
 
 <script setup lang="ts">
-import xlsxPreview from 'xlsx-preview';
+import LuckyExcel from 'luckyexcel';
 import { ref, onMounted, defineProps } from 'vue';
 import { store } from "@/store";
-import axios from "axios";
-import qs from 'qs';
+
+import 'luckysheet/dist/css/luckysheet.css';
+import 'luckysheet/dist/plugins/plugins.css';
+import 'luckysheet/dist/plugins/css/pluginsCss.css';
+import 'luckysheet/dist/assets/iconfont/iconfont.css';
+
+function getType(val) {
+  return Object.prototype.toString.call(val).slice(8, -1)
+}
+
+function isFunction(val) {
+  return getType(val) === 'Function'
+}
 
 const props = defineProps<{
     query?:string
@@ -15,18 +26,29 @@ const props = defineProps<{
 const isLoading = ref(true);
 
 const load = async () => {
-  let q = qs.parse(props.query);
-  const res = await axios({
-    method: 'get',
-    url: '//' + location.host + '/prvw/api/get?' + props.query + '&token=' + store.token,
-    responseType: 'arraybuffer',
+  const url = `//${location.host}/prvw/api/get?${props.query}&token=${store.token}`;
+
+  LuckyExcel.transformExcelToLuckyByUrl(url, '', (exportJson:any, _luckysheetfile:any) => {
+    if (exportJson.sheets == null || exportJson.sheets.length == 0) {
+      alert('Failed to read the content of the excel file, currently does not support xls files!')
+      return
+    }
+
+    isFunction(window?.luckysheet?.destroy) && window.luckysheet.destroy()
+
+    window.luckysheet.create({
+      container: 'luckysheet', //luckysheet is the container id
+      showtoolbar: false,
+      showinfobar: false,
+      showstatisticBar: false,
+      showstatisticBarConfig:{
+        zoom: true,
+      },
+      data: exportJson.sheets,
+      title: exportJson.info.name,
+      userInfo: exportJson.info.name.creator,
+    })
   });
-  const result = await xlsxPreview.xlsx2Html(res.data, { output: 'arraybuffer', format: q.t });
-  const url = URL.createObjectURL(new Blob([result], {
-    type: 'text/html',
-  }));
-  document.querySelector('#result').innerHTML =
-    `<object class="res-obj" type="text/html" data="${url}"></object>`;
   isLoading.value = false;
 }
 
@@ -43,14 +65,13 @@ onMounted(() => {
   color: #ddd;
 }
 
-.app-content {
-  padding: 8px;
+#luckysheet {
+  margin: 0px;
+  padding: 0px;
+  position: absolute;
   width: 100%;
-}
-
-.res-obj {
-  width: 100%;
-  height: 85vh;
-  background-color: rgba(255, 255, 255, 0.9);
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
 }
 </style>
