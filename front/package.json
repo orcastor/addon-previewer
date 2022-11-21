@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "axios": "^0.27.2",
+    "docx-preview": "^0.1.14",
     "element-plus": "^2.2.17",
     "luckyexcel": "^1.0.1",
     "luckysheet": "^2.1.13",

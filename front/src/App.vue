@@ -6,8 +6,9 @@
 import { ref, shallowRef, watch, defineAsyncComponent, Component } from 'vue';
 import qs from 'qs';
 import none from '@/comps/None.vue';
-import doc from '@/comps/Doc.vue';
+import pdf from '@/comps/Pdf.vue';
 import img from '@/comps/Img.vue';
+import docx from '@/comps/Docx.vue';
 import xlsx from '@/comps/Xlsx.vue';
 const comp = shallowRef(none);
 const query = ref('');
@@ -17,7 +18,7 @@ const init = () => {
   let q = qs.parse(query.value);
   switch (q.t) {
   case 'pdf':
-    comp.value = doc;
+    comp.value = pdf;
     break;
   case 'jpg':
   case 'jpeg':
@@ -32,6 +33,9 @@ const init = () => {
   case 'tiff':
   case 'webp':
     comp.value = img;
+    break;
+  case 'docx':
+    comp.value = docx;
     break;
   // case 'csv':
   case 'xlsx':

@@ -10,7 +10,9 @@
 |类型|方案|格式|备注|
 |-|-|-|-|
 |PDF文档|[pdf.js](https://github.com/mozilla/pdf.js) / [vue-pdf-embed](https://github.com/hrynko/vue-pdf-embed)|pdf|支持有密码文件|
-|Office文档|LibreOffice转换成pdf / [Office365](https://www.microsoft.com/en-us/microsoft-365/blog/2013/04/10/office-web-viewer-view-office-documents-in-a-browser/?eu=true) ~~/ [CKEditor](https://ckeditor.com/docs/ckeditor5/latest/examples/builds/document-editor.html) / [PPTist](https://github.com/pipipi-pikachu/PPTist)~~ |docx、pptx、xlsx等|LibreOffice字体问题；~~CKEditor / PPTist支持编辑；~~ 有密码文档问题|
+|DOCX文档|[docxjs](https://www.npmjs.com/package/docx-preview)+LibreOffice转换成docx格式|docx、doc、pages等|LibreOffice字体问题；有密码文档问题|
+|XLSX文档|[luckyexcel](https://github.com/dream-num/Luckyexcel)+LibreOffice转换成xlsx格式|xlsx、xls、csv等|LibreOffice字体问题；有密码文档问题|
+|PPT文档|[pptx2json](https://github.com/pipipi-pikachu/pptx2json)+LibreOffice转换成pptx格式|pptx、ppt、key等|LibreOffice字体问题；有密码文档问题|
 |CAD文档|工具转换成pdf|dwg、dwt等|
 |文本文档|转pdf / 富文本编辑器|txt、json/toml/yml/config/xml等|enca/file检测编码防止中文乱码|
 |代码文档|md代码染色 / WebIDE|cpp、c、h、java、py、go、php、js、html、css等|enca/file检测编码防止中文乱码|
