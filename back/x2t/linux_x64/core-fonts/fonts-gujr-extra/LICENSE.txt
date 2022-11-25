@@ -1,0 +1,4 @@
+Copyright (C) 2007-2015 George Douros
+Fonts in Unicode Fonts for Ancient Scripts are offered free for any use;
+they may be opened, edited, modified, regenerated, posted, packaged and 
+redistributed.
