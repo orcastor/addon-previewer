@@ -4,7 +4,9 @@
   </a>
 </p>
 
-<p align="center"><strong>OrcaS 在线预览插件</strong></p>
+<p align="center"><strong>OrcaS 文档预览插件</strong></p>
+
+<p align="center">—— 基于h5，纯离线本地版，效果/兼容性更好，可自行适配存储 ——</p>
 
 |类型|进度|方案|格式|备注|
 |-|-|-|-|-|
