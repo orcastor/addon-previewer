@@ -21,7 +21,7 @@
 |视频||ffmpeg转换成HLS(m3u8)|mp4、wmv、mkv等|fps和码率；可以尝试h.265；支持GPU加速（OpenCL/Vulkan）|
 |音频||[aPlayer](https://github.com/DIYgod/APlayer)/[cPlayer](https://github.com/MoePlayer/cPlayer)|mp3,wma,wav,ape,flac,ogg,aac等|支持匹配封面、lrc歌词文件|
 |压缩包||本身库支持|rar、zip、7z等|有密码的文档|
-|图标||图片 / PE格式解析|desktop.ini、dmg、exe、*.app目录等|
+|图标||图片 / PE格式解析|desktop.ini、dmg、exe、apk、*.app目录等|
 
 \* 需要准备的字体库：
 - fonts-dejavu
