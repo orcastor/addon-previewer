@@ -24,10 +24,13 @@
 |图标||图片 / PE格式解析|desktop.ini、dmg、exe、apk、*.app目录等|
 
 \* 需要准备的字体库：
+- ttf-mscorefonts-installer
 - fonts-dejavu
 - fonts-liberation
-- ttf-mscorefonts-installer
 - fonts-crosextra-carlito
 - fonts-takao-gothic
 - fonts-opensymbol
+- fonts-beng-extra
+- fonts-gujr-extra
+- fonts-telu-extra
 - [ONLYOFFICE/core-fonts](https://github.com/ONLYOFFICE/core-fonts)
