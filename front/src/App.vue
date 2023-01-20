@@ -17,6 +17,8 @@ const init = () => {
   query.value = window.location.href.split('#')[0].split('?')[1];
   let q = qs.parse(query.value);
   switch (q.t) {
+  case 'ppt':
+  case 'pptx':
   case 'pdf':
     comp.value = pdf;
     break;
@@ -34,10 +36,16 @@ const init = () => {
   case 'webp':
     comp.value = img;
     break;
+  case 'txt':
+  case 'json':
+  case 'xml':
+  case 'toml':
+  case 'yaml':
+  case 'config':
   case 'docx':
     comp.value = docx;
     break;
-  // case 'csv':
+  case 'csv':
   case 'xlsx':
     comp.value = xlsx;
     break;

@@ -10,6 +10,7 @@ import (
 )
 
 // EGO_DEBUG=true EGO_LOG_EXTRA_KEYS=uid ORCAS_BASE=/tmp/test ORCAS_DATA=/tmp/test ORCAS_SECRET=xxxxxxxx egoctl run --runargs --config=config.toml
+// ORCAS_DOCKER_EXEC="docker exec -i <container_id>" EGO_DEBUG=true EGO_LOG_EXTRA_KEYS=uid ORCAS_BASE=/tmp/test ORCAS_DATA=/tmp/test ORCAS_SECRET=xxxxxxxx egoctl run --runargs --config=config.toml
 // go run server.go --config=config.toml
 func main() {
 	core.InitDB()
