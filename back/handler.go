@@ -105,14 +105,12 @@ READ_TO_FILE:
 func convert(fromPath, toPath string) error {
 	var out bytes.Buffer
 	cmds := append(strings.Split(ORCAS_DOCKER_EXEC, " "), "/opt/x2t/x2t", fromPath, toPath)
-	elog.Infof("cmds: %+v", cmds[0])
-	elog.Infof("cmds: %+v", cmds[1:])
 	cmd := exec.Command(cmds[0], cmds[1:]...)
 	cmd.Stdout = &out
 	cmd.Stderr = &out
 	err := cmd.Run()
 	if err != nil {
-		elog.Infof("out: %+v", out.String())
+		elog.Errorf("convert error: %+v", out.String())
 	}
 	return err
 }

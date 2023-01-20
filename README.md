@@ -23,17 +23,12 @@
 |压缩包||本身库支持|rar、zip、7z等|有密码的文档|
 |图标||图片 / PE格式解析|desktop.ini、dmg、exe、apk、*.app目录等|
 
-\* 需要准备的字体库：
-- ttf-mscorefonts-installer
-- fonts-dejavu
-- fonts-liberation
-- fonts-crosextra-carlito
-- fonts-takao-gothic
-- fonts-opensymbol
-- fonts-beng-extra
-- fonts-gujr-extra
-- fonts-telu-extra
-- [ONLYOFFICE/core-fonts](https://github.com/ONLYOFFICE/core-fonts)
+### 部署方法：
 
-\* 需要把打包后的文件放置到webapp一起：
-> ln -s <addon-previewer>/front/dist <webapp>/dist/prvw
+- 把[back/x2t](https://github.com/orcastor/addon-previewer/tree/main/back/x2t)下的`common`和对应平台（`linux_arm64`/`linux_x64`）目录下的文件都拷贝到`/opt/x2t`下
+- 执行`sh allfontsgen.sh`安装字体文件、生成字体列表
+
+其他：
+- 如果使用docker，需要配置`ORCAS_DOCKER_EXEC="docker exec -i <container_id>"`环境变量，其中`container_id`为容器的id值
+- 打包后的文件和webapp的放置到一起：
+`ln -s $(addon-previewer)/front/dist $(webapp)/dist/prvw`
