@@ -20,7 +20,8 @@
 |图片|✅|vips / ImagicMagick / GraphicsMagick等转换缩略图|png、jpg、gif、bmp、ico等|gif需要处理多帧；GM支持OpenMP加速|
 |视频||ffmpeg转换成HLS(m3u8)|mp4、wmv、mkv等|fps和码率；可以尝试h.265；支持GPU加速（OpenCL/Vulkan）|
 |音频||[aPlayer](https://github.com/DIYgod/APlayer)/[cPlayer](https://github.com/MoePlayer/cPlayer)|mp3,wma,wav,ape,flac,ogg,aac等|支持匹配封面、lrc歌词文件|
-|压缩包||本身库支持|rar、zip、7z等|有密码的文档|
+|压缩包||写到临时目录解压|rar、zip、7z等|有密码的文档|
+|备份||imobax & abe|iOS备份目录，安卓备份ab文件等|有密码的备份|
 |图标||图片 / PE格式解析|desktop.ini、dmg、exe、apk、*.app目录等|
 
 ### 部署方法：
