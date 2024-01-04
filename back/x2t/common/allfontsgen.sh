@@ -11,14 +11,13 @@
 #deb-src http://mirrors.aliyun.com/ubuntu/ vivid-updates main restricted universe multiverse
 #deb-src http://mirrors.aliyun.com/ubuntu/ vivid-proposed main restricted universe multiverse
 #deb-src http://mirrors.aliyun.com/ubuntu/ vivid-backports main restricted universe multiverse" >> /etc/apt/sources.list
+#apt-get update
 
-apt-get update
-
-apt-get install fontconfig ttf-mscorefonts-installer fonts-dejavu fonts-liberation fonts-crosextra-carlito fonts-takao-gothic fonts-opensymbol fonts-beng-extra fonts-gujr-extra fonts-telu-extra fonts-nanum fonts-noto fonts-wqy-zenhei fonts-arphic-ukai fonts-freefont-ttf -y --no-install-recommends
+apt-get install fontconfig fonts-dejavu fonts-liberation fonts-crosextra-carlito fonts-takao-gothic fonts-opensymbol fonts-beng-extra fonts-gujr-extra fonts-telu-extra fonts-nanum fonts-noto fonts-wqy-zenhei fonts-arphic-ukai fonts-freefont-ttf fonts-takao-gothic -y --no-install-recommends
 fc-cache -fv
 
 #Start generate AllFonts.js, font thumbnails and font_selection.bin
-echo -n Generating AllFonts.js, please wait...
+echo Generating AllFonts.js, please wait...
 
 "./allfontsgen"\
   --input="`pwd`/core-fonts"\
@@ -26,3 +25,5 @@ echo -n Generating AllFonts.js, please wait...
   --images="./js/sdkjs/common/Images"\
   --selection="./font_selection.bin"\
   --use-system="true"
+
+echo Done
