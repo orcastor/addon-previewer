@@ -24,19 +24,19 @@
 |备份||imobax & abe|iOS备份目录，安卓备份ab文件等|有密码的备份|
 |图标||图片 / PE格式解析|desktop.ini、dmg、exe、apk、*.app目录等|
 
-<p align="center"><strong>关于onlyoffice/x2t</strong></p>
+## 关于onlyoffice/x2t
 
-### 部署方法：
+#### 部署方法：
 
-- 把[back/x2t](https://github.com/orcastor/addon-previewer/tree/main/back/x2t)下的`common`和对应平台（`linux_arm64`/`linux_x64`）目录下的文件都拷贝到`/opt/x2t`（必须是这个路径，js文件中写死）下
+- 把[back/x2t](https://github.com/orcastor/addon-previewer/tree/main/back/x2t)下的`common`和对应平台（`linux_arm64`/`linux_x64`）目录下的文件都拷贝到`/opt/x2t`（换其他路径执行下面的脚本即可）下
 - 执行`sh allfontsgen.sh`安装字体文件、生成字体列表
 
-### 注意事项：
-- 如果使用docker，需要配置`ORCAS_DOCKER_EXEC="docker exec -i <container_id>"`环境变量，其中`container_id`为容器的id值
+#### 注意事项：
+- 如果转换插件在docker镜像中部署，需要配置`ORCAS_DOCKER_EXEC="docker exec -i <container_id>"`环境变量，其中`container_id`为容器的id值
 - 打包后的文件和webapp的放置到一起：
 `ln -s $(addon-previewer)/front/dist $(webapp)/dist/prvw`
 
-### 优势：
+#### 方案优势：
 
 - 更好的性能
 
@@ -52,6 +52,7 @@
 
 - 更好的兼容性
 
+  - Case举例： keynote创建的pptx格式，LibreOffice/OpenOffice转换pdf失败，onlyoffice没问题，并且字体更准确
   - 插件中仅移除了不常用的epub和fb2格式
   - [点我查看完整文档](https://api.onlyoffice.com/editors/conversionapi#text-matrix)
         <table>
