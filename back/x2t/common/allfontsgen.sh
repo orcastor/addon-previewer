@@ -9,7 +9,7 @@ fc-cache -fv
 #Start generate AllFonts.js, font thumbnails and font_selection.bin
 echo Generating AllFonts.js, please wait...
 
-mv -f "./libgraphics.so" "./libgraphics.so.bak"
+cp -f "./libgraphics.so" "./libgraphics.so.bak"
 
 "./upx" -d "./libgraphics.so.bak" -o "./libgraphics.so" > /dev/null 2>&1
 

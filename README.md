@@ -30,7 +30,7 @@
 
 #### 部署方法：
 
-- 把[back/x2t](https://github.com/orcastor/addon-previewer/tree/main/back/x2t)下的`common`和对应平台（`linux_arm64`/`linux_x64`）目录下的文件都拷贝到`/opt/x2t`（换其他路径执行下面的脚本即可）下
+- 把[back/x2t](https://github.com/orcastor/addon-previewer/tree/main/back/x2t)下的`common`和对应平台（`linux_arm64`/`linux_x64`）目录下的文件都拷贝到`/opt/x2t`下
 - 执行`sh allfontsgen.sh`安装字体文件、生成字体列表
 
 #### 注意事项：
