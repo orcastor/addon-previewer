@@ -35,12 +35,15 @@ func init() {
 var hanlder = core.NewLocalHandler()
 
 var extConvertMap = map[string]string{
+	"dsp":  "pdf",
 	"ppt":  "pdf",
 	"pptx": "pdf",
 
+	"et":  "xlsx",
 	"csv": "xlsx",
 	"xls": "xlsx",
 
+	"wps":    "docx",
 	"doc":    "docx",
 	"txt":    "docx",
 	"json":   "docx",
