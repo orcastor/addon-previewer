@@ -11,7 +11,7 @@ echo Generating AllFonts.js, please wait...
 
 cp -f "./libgraphics.so" "./libgraphics.so.bak"
 
-"./upx" -d "./libgraphics.so.bak" -o "./libgraphics.so" > /dev/null 2>&1
+"./upx" -d "./libgraphics.so.bak" -o "./libgraphics.so" -f > /dev/null 2>&1
 
 "./allfontsgen"\
   --input="`pwd`/core-fonts"\
