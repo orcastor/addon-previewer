@@ -1,0 +1,75 @@
+CC=clang CXX=clang++ meson build --libdir=lib --buildtype=release -Dintrospection=disabled -Dpangocairo=disabled -Drsvg=disabled
+
+vips 8.16.0
+
+  Dependencies
+    glib-2.0                          : 2.64.6
+    gio-2.0                           : 2.64.6
+    gobject-2.0                       : 2.64.6
+    gmodule-no-export-2.0             : 2.64.6
+    expat                             : 2.2.9
+    zlib                              : 1.2.11
+    fftw3                             : 3.3.8
+    cfitsio                           : 3.47
+    imagequant                        : 2.12.2
+    cgif                              : 0.4.0
+    libexif                           : 0.6.21
+    libjpeg                           : 2.0.3
+    libpng                            : 1.6.37
+    libwebp                           : 0.6.1
+    libwebpmux                        : 0.6.1
+    libwebpdemux                      : 0.6.1
+    libtiff-4                         : 4.1.0
+    matio                             : 1.5.17
+    OpenEXR                           : 2.3.0
+    libhwy                            : 1.0.7
+
+  Build options
+    enable debug                      : NO
+    enable deprecated                 : YES
+    enable modules                    : YES
+    enable gtk-doc                    : NO
+    enable doxygen                    : NO
+    enable introspection              : NO
+    enable examples                   : YES
+    enable cplusplus                  : YES
+    enable RAD load/save              : YES
+    enable Analyze7 load/save         : YES
+    enable PPM load/save              : YES
+    enable GIF load                   : YES
+
+  Optional external packages
+    FFTs with fftw3                   : YES
+    SIMD support with libhwy          : YES
+    ICC profile support with lcms2    : NO
+    deflate compression with zlib     : YES
+    text rendering with pangocairo    : NO
+    font file support with fontconfig : NO
+    EXIF metadata support with libexif: YES
+
+  External image format libraries
+    JPEG load/save with libjpeg       : YES
+    JXL load/save with libjxl         : NO (dynamic module: NO)
+    JPEG2000 load/save with OpenJPEG  : NO
+    PNG load/save with libpng         : YES
+    image quantisation with imagequant: YES
+    TIFF load/save with libtiff-4     : YES
+    image pyramid save with libarchive: NO
+    HEIC/AVIF load/save with libheif  : NO (dynamic module: NO)
+    WebP load/save with libwebp       : YES
+    PDF load with poppler-glib        : YES (dynamic module: YES)
+    SVG load with librsvg             : NO
+    EXR load with OpenEXR             : YES
+    WSI load with openslide           : YES
+    Matlab load with matio            : YES
+    NIfTI load/save with libnifti     : NO
+    FITS load/save with cfitsio       : YES
+    GIF save with cgif                : YES
+    Magick load/save with MagickCore  : NO (dynamic module: NO)
+
+  User defined options
+    buildtype                         : release
+    libdir                            : lib
+    introspection                     : disabled
+    pangocairo                        : disabled
+    rsvg                              : disabled
