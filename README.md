@@ -18,7 +18,7 @@
 |文本|✅|富文本编辑器|[x2t](https://github.com/ONLYOFFICE/core)转换成docx|txt、json/toml/yml/config/xml等|enca/file检测编码防止中文乱码|
 |代码||md代码染色 / WebIDE|-|cpp、c、h、java、py、go、php、js、html、css等|enca/file检测编码防止中文乱码|
 |设计||同pdf|[LibreCAD](https://github.com/LibreCAD/LibreCAD)转换成pdf|dwg、dwt、dxf等|
-|图片|✅|[el-image](https://element.eleme.cn/#/zh-CN/component/image)|[libvips](https://github.com/libvips/libvips)转换缩略图|png、jpg、gif、bmp、ico、eps、psd等|gif需要处理多帧；GM支持OpenMP加速|
+|图片|✅|[el-image](https://element.eleme.cn/#/zh-CN/component/image)|[govips](https://github.com/davidbyttow/govips)转换缩略图|png、jpg、gif、bmp、ico、eps、psd等|gif需要处理多帧；GM支持OpenMP加速|
 |视频|||[ffmpeg](https://github.com/FFmpeg/FFmpeg)转换成HLS(m3u8)|mp4、wmv、mkv等|fps和码率；可以尝试h.265；支持GPU加速（OpenCL/Vulkan）|
 |音频||[aPlayer](https://github.com/DIYgod/APlayer)/[cPlayer](https://github.com/MoePlayer/cPlayer)|-|mp3,wma,wav,ape,flac,ogg,aac等|支持匹配封面、lrc歌词文件|
 |存档|||写到临时目录解压|rar、zip、7z等|有密码的文档|
