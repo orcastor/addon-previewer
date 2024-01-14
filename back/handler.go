@@ -34,7 +34,7 @@ func init() {
 
 var hanlder = core.NewLocalHandler()
 
-var docConvMap = map[string]string{
+var x2tTypes = map[string]string{
 	"dsp":  "pdf",
 	"ppt":  "pdf",
 	"pptx": "pdf",
@@ -58,7 +58,7 @@ func get(ctx *gin.Context) {
 	id, _ := strconv.ParseInt(ctx.Query("i"), 10, 64)
 
 	from := ctx.Query("t") // from无法注入，不在白名单会直接返回
-	to := docConvMap[from]
+	to := x2tTypes[from]
 	if to == "" {
 		// 不需要转换格式，那就直接写到http
 		if err := writeTo(ctx, bktID, id, ctx.Writer, true); err != nil {
@@ -117,7 +117,7 @@ func x2tConv(fromPath, toPath string) error {
 	return err
 }
 
-var thumbnailMap = map[string]bool{
+var vipsTypes = map[string]bool{
 	"csv":  true,
 	"bmp":  true,
 	"raw":  true,
@@ -146,7 +146,7 @@ var thumbnailMap = map[string]bool{
 	"vips": true,
 }
 
-var thumbnai2lMap = map[string]bool{
+var outTypes = map[string]bool{
 	"jpg":  true,
 	"png":  true,
 	"gif":  true,
@@ -161,7 +161,7 @@ func thumbnail(ctx *gin.Context) {
 	h, _ := strconv.ParseInt(ctx.Query("h"), 10, 64)
 
 	from := ctx.Query("t") // from无法注入，不在白名单会直接返回
-	if !thumbnailMap[from] {
+	if !vipsTypes[from] {
 		// 不需要转换格式，那就直接写到http
 		if err := writeTo(ctx, bktID, id, ctx.Writer, true); err != nil {
 			util.AbortResponse(ctx, 100, err.Error())
@@ -172,7 +172,7 @@ func thumbnail(ctx *gin.Context) {
 	// TODO：如果是文档格式，先用x2t获取文档缩略图
 
 	to := ctx.Query("nt") // to无法注入，不在白名单会直接返回
-	if !thumbnai2lMap[to] {
+	if !outTypes[to] {
 		util.AbortResponse(ctx, 400, errors.New("not supported format"))
 		return
 	}
@@ -218,9 +218,8 @@ func vipsConv(fromPath, toPath string, w, h int64) error {
 	var out bytes.Buffer
 	cmds := append(strings.Split(ORCAS_DOCKER_EXEC, " "), "/opt/vips/vipsthumbnail", fromPath,
 		"--size", fmt.Sprintf("%dx%d", w, h),
-		"--export-profile", "srgb",
 		"--smartcrop", "attention",
-		"-o", toPath+"[optimize_coding,keep=none]")
+		"-o", toPath+"[keep=none]")
 	cmd := exec.Command(cmds[0], cmds[1:]...)
 	cmd.Stdout = &out
 	cmd.Stderr = &out
