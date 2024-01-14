@@ -23,6 +23,7 @@ func main() {
 
 		api := server.Group("/prvw/api")
 		api.GET("/get", get)
+		api.GET("/thumbnail", thumbnail)
 		return server
 	}()).Run(); err != nil {
 		elog.Panic("startup", elog.Any("err", err))
