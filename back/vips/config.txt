@@ -1,4 +1,4 @@
-CC=clang CXX=clang++ meson build --libdir=lib --buildtype=release -Dintrospection=disabled -Dpangocairo=disabled -Drsvg=disabled
+CC=clang CXX=clang++ meson setup build --libdir=lib --buildtype=release -Dintrospection=disabled -Dpangocairo=disabled -Drsvg=disabled -Dpoppler=disabled -Dcpp_link_args="$LDFLAGS -Wl,-rpath=."
 
 vips 8.16.0
 
@@ -57,7 +57,7 @@ vips 8.16.0
     image pyramid save with libarchive: NO
     HEIC/AVIF load/save with libheif  : NO (dynamic module: NO)
     WebP load/save with libwebp       : YES
-    PDF load with poppler-glib        : YES (dynamic module: YES)
+    PDF load with PDFium or Poppler   : NO (dynamic module: NO)
     SVG load with librsvg             : NO
     EXR load with OpenEXR             : YES
     WSI load with openslide           : YES
