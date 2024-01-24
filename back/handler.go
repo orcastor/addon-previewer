@@ -34,7 +34,10 @@ func init() {
 
 var hanlder = core.NewLocalHandler()
 
-var x2tTypes = map[string]string{
+var docConvTypes = map[string]string{
+	"dwg": "pdf",
+	"dxf": "pdf",
+
 	"dsp":  "pdf",
 	"ppt":  "pdf",
 	"pptx": "pdf",
@@ -57,8 +60,8 @@ func get(ctx *gin.Context) {
 	bktID, _ := strconv.ParseInt(ctx.Query("b"), 10, 64)
 	id, _ := strconv.ParseInt(ctx.Query("i"), 10, 64)
 
-	from := ctx.Query("t") // from无法注入，不在白名单会直接返回
-	to := x2tTypes[from]
+	from := strings.ToLower(ctx.Query("t")) // from无法注入，不在白名单会直接返回
+	to := docConvTypes[from]
 	if to == "" {
 		// 不需要转换格式，那就直接写到http
 		if err := writeTo(ctx, bktID, id, ctx.Writer, true); err != nil {
@@ -81,10 +84,18 @@ func get(ctx *gin.Context) {
 		return
 	}
 
-	// 转换格式
-	if err := x2tConv(fromPath, toPath); err != nil {
-		util.AbortResponse(ctx, 100, err.Error())
-		return
+	if from == "dwg" || from == "dxf" {
+		// 转换格式
+		if err := cad2xConv(fromPath, toPath); err != nil {
+			util.AbortResponse(ctx, 100, err.Error())
+			return
+		}
+	} else {
+		// 转换格式
+		if err := x2tConv(fromPath, toPath); err != nil {
+			util.AbortResponse(ctx, 100, err.Error())
+			return
+		}
 	}
 
 	// 删除临时文件
@@ -117,7 +128,20 @@ func x2tConv(fromPath, toPath string) error {
 	return err
 }
 
-var vipsTypes = map[string]bool{
+func cad2xConv(fromPath, toPath string) error {
+	var out bytes.Buffer
+	cmds := append(strings.Split(ORCAS_DOCKER_EXEC, " "), "/opt/cad2x/cad2pdf", fromPath, toPath, "-a")
+	cmd := exec.Command(cmds[0], cmds[1:]...)
+	cmd.Stdout = &out
+	cmd.Stderr = &out
+	err := cmd.Run()
+	if err != nil {
+		elog.Errorf("cad2xConv error: %+v", out.String())
+	}
+	return err
+}
+
+var thumbSupport = map[string]bool{
 	"csv":  true,
 	"bmp":  true,
 	"raw":  true,
@@ -160,8 +184,8 @@ func thumbnail(ctx *gin.Context) {
 	w, _ := strconv.ParseInt(ctx.Query("w"), 10, 64)
 	h, _ := strconv.ParseInt(ctx.Query("h"), 10, 64)
 
-	from := ctx.Query("t") // from无法注入，不在白名单会直接返回
-	if !vipsTypes[from] {
+	from := strings.ToLower(ctx.Query("t")) // from无法注入，不在白名单会直接返回
+	if !thumbSupport[from] {
 		// 不需要转换格式，那就直接写到http
 		if err := writeTo(ctx, bktID, id, ctx.Writer, true); err != nil {
 			util.AbortResponse(ctx, 100, err.Error())
@@ -171,7 +195,9 @@ func thumbnail(ctx *gin.Context) {
 
 	// TODO：如果是文档格式，先用x2t获取文档缩略图
 
-	to := ctx.Query("nt") // to无法注入，不在白名单会直接返回
+	// TODO：如果涉及隐私文件，返回不支持获取缩略图
+
+	to := strings.ToLower(ctx.Query("nt")) // to无法注入，不在白名单会直接返回
 	if !outTypes[to] {
 		util.AbortResponse(ctx, 400, errors.New("not supported format"))
 		return
