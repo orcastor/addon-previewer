@@ -15,27 +15,27 @@
 |表格|✅|[luckyexcel](https://github.com/dream-num/Luckyexcel) |[x2t](https://github.com/ONLYOFFICE/core)转换成xlsx|xlsx、xls、csv、et等|\*字体问题；有密码文档问题|
 |演示|✅|同pdf|[x2t](https://github.com/ONLYOFFICE/core)转换成pdf|pptx、ppt、dps等|\*字体问题；有密码文档问题|
 |iWork|||转换成上述格式|pages、numbers、key等||
-|文本|✅|富文本编辑器|[x2t](https://github.com/ONLYOFFICE/core)转换成docx|txt、json/toml/yml/config/xml等|enca/file检测编码防止中文乱码|
+|文本|✅|同docx|[x2t](https://github.com/ONLYOFFICE/core)转换成docx|txt、json/toml/yml/config/xml等|enca/file检测编码防止中文乱码|
 |代码||md代码染色 / WebIDE|-|cpp、c、h、java、py、go、php、js、html、css等|enca/file检测编码防止中文乱码|
 |设计|✅|同pdf|[cad2x](https://github.com/orcastor/cad2x-converter)转换成pdf|dwg、dwt、dxf等|
-|图片|✅|[el-image](https://element.eleme.cn/#/zh-CN/component/image)|[govips](https://github.com/davidbyttow/govips)转换缩略图|png、jpg、gif、bmp、ico、eps、psd等；文档需要先获取首页截图|gif需要处理多帧；GM支持OpenMP加速|
+|图片|✅|[el-image](https://element.eleme.cn/#/zh-CN/component/image)|[vips](https://github.com/libvips/libvips)转换缩略图|png、jpg、gif、bmp、ico、eps、psd等；文档需要先获取首页截图|gif需要处理多帧；GM支持OpenMP加速|
 |视频|||[ffmpeg](https://github.com/FFmpeg/FFmpeg)转换成HLS(m3u8)|mp4、wmv、mkv等|fps和码率；可以尝试h.265；支持GPU加速（OpenCL/Vulkan）|
 |音频||[aPlayer](https://github.com/DIYgod/APlayer)/[cPlayer](https://github.com/MoePlayer/cPlayer)|-|mp3,wma,wav,ape,flac,ogg,aac等|支持匹配封面、lrc歌词文件|
 |存档|||写到临时目录解压|rar、zip、7z等|有密码的文档|
 |备份|||imobax & abe|iOS备份目录，安卓备份ab文件等|有密码的备份|
 |图标||ico/svg|图片 / PE格式解析|desktop.ini、dmg、exe、apk、*.app目录等|
 
-## 关于onlyoffice/x2t
+## 注意事项：
+- 如果转换插件在docker镜像中部署，需要配置`ORCAS_DOCKER_EXEC="docker exec -i <container_id>"`环境变量，其中`container_id`为容器的id值
+- 打包后的文件和webapp的放置到一起：
+`ln -s $(addon-previewer)/front/dist $(webapp)/dist/prvw`
+
+## 关于x2t（OnlyOffice）
 
 #### 部署方法：
 
 - 把[back/x2t](https://github.com/orcastor/addon-previewer/tree/main/back/x2t)下的`common`和对应平台（`linux_arm64`/`linux_x64`）目录下的文件都拷贝到`/opt/x2t`下
 - 执行`sh allfontsgen.sh`安装字体文件、生成字体列表
-
-#### 注意事项：
-- 如果转换插件在docker镜像中部署，需要配置`ORCAS_DOCKER_EXEC="docker exec -i <container_id>"`环境变量，其中`container_id`为容器的id值
-- 打包后的文件和webapp的放置到一起：
-`ln -s $(addon-previewer)/front/dist $(webapp)/dist/prvw`
 
 #### 方案优势：
 
@@ -46,7 +46,7 @@
   - 秒级启动，不需要常驻
 
 - 更小的体积
-  - onlyoffice/x2t完整功能支持仅88.8MB：可执行文件31.5MB + 配置文件57.3MB
+  - x2t完整功能支持仅88.8MB：可执行文件31.5MB + 配置文件57.3MB
     - 对比LibreOffice（6.4.7.2）需要401MB：jvm运行环境179MB + 包222MB（无字体）
   - 字体文件166MB左右：常见字体82.8MB（见core-fonts） + 下载82.9MB（见allfontsgen.sh）
     <details><summary>移除了非中文字体，可按需补回</summary>
@@ -75,7 +75,8 @@
 
 - 更好的兼容性
 
-  - 举例： 用MacOSX的keynote创建的pptx，onlyoffice转换没问题，并且展示准确
+  - 从[OnlyOffice](https://github.com/onlyoffice/core)最新版本v7.5.1修改
+  - 举例： 用MacOSX的keynote创建的pptx，OnlyOffice转换没问题，并且展示准确
     - 对比Microsoft Office/WPS打开失败、LibreOffice/OpenOffice转换pdf格式丢失（老版本也打开失败）
   - 插件移除了不常用的djvu、epub、fb2格式
     <details><summary>展开查看支持矩阵</summary>
@@ -147,3 +148,21 @@
       </table>
     </details>
 
+## 关于cad2x（LibreCAD）
+
+#### 部署方法：
+
+- 把[back/cad2x](https://github.com/orcastor/addon-previewer/tree/main/back/cad2x)对应平台（`linux_arm64`/`linux_x64`）目录下的文件都拷贝到`/opt/cad2x`下
+
+#### 方案优势：
+
+- 更好的兼容性
+
+  - 从[LibreCAD](https://github.com/LibreCAD/LibreCAD)最新代码裁剪
+  - 尝试修复了一些bug
+
+- 更小的体积
+
+  - 去除了GUI部分（界面渲染和跨平台）
+  - 裁剪了大量无用依赖库和代码
+  - 最终二进制文件仅2.9MB
