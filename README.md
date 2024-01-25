@@ -30,7 +30,7 @@
 - 打包后的文件和webapp的放置到一起：
 `ln -s $(addon-previewer)/front/dist $(webapp)/dist/prvw`
 
-## 关于x2t（OnlyOffice）
+## 关于x2t
 
 #### 部署方法：
 
@@ -148,7 +148,7 @@
       </table>
     </details>
 
-## 关于cad2x（LibreCAD）
+## 关于cad2x
 
 #### 部署方法：
 
@@ -158,7 +158,7 @@
 
 - 更好的兼容性
 
-  - 从[LibreCAD](https://github.com/LibreCAD/LibreCAD)最新代码裁剪
+  - 从[LibreCAD](https://github.com/LibreCAD/LibreCAD)最新代码（commit-id：0601535）裁剪
   - 尝试修复了一些bug
 
 - 更小的体积
