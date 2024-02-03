@@ -35,8 +35,8 @@ func init() {
 var hanlder = core.NewLocalHandler()
 
 var docConvTypes = map[string]string{
-	"dwg": "pdf",
-	"dxf": "pdf",
+	"dwg": "png",
+	"dxf": "png",
 
 	"dsp":  "pdf",
 	"ppt":  "pdf",
@@ -117,7 +117,10 @@ READ_TO_FILE:
 
 func x2tConv(fromPath, toPath string) error {
 	var out bytes.Buffer
-	cmds := append(strings.Split(ORCAS_DOCKER_EXEC, " "), "/opt/x2t/x2t", fromPath, toPath)
+	cmds := append(strings.Split(ORCAS_DOCKER_EXEC, " "),
+		"/opt/x2t/x2t",
+		fromPath,
+		toPath)
 	cmd := exec.Command(cmds[0], cmds[1:]...)
 	cmd.Stdout = &out
 	cmd.Stderr = &out
@@ -130,7 +133,14 @@ func x2tConv(fromPath, toPath string) error {
 
 func cad2xConv(fromPath, toPath string) error {
 	var out bytes.Buffer
-	cmds := append(strings.Split(ORCAS_DOCKER_EXEC, " "), "/opt/cad2x/cad2pdf", fromPath, toPath, "-a")
+	cmds := append(strings.Split(ORCAS_DOCKER_EXEC, " "),
+		"/opt/cad2x/cad2pdf",
+		fromPath,
+		"-o", toPath,
+		"-ac",
+		"-e", "ANSI_936",
+		"-f", "simsun",
+		"-l", "/opt/x2t/core-fonts")
 	cmd := exec.Command(cmds[0], cmds[1:]...)
 	cmd.Stdout = &out
 	cmd.Stderr = &out
