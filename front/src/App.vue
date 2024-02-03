@@ -17,14 +17,14 @@ const init = () => {
   query.value = window.location.href.split('#')[0].split('?')[1];
   let q = qs.parse(query.value);
   switch (q.t) {
-  case 'dwg':
-  case 'dxf':
   case 'dsp':
   case 'ppt':
   case 'pptx':
   case 'pdf':
     comp.value = pdf;
     break;
+  case 'dwg':
+  case 'dxf':
   case 'jpg':
   case 'jpeg':
   case 'png':
