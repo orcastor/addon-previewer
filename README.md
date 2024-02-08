@@ -14,7 +14,7 @@
 |文字|✅|[docxjs](https://www.npmjs.com/package/docx-preview)|[x2t](https://github.com/ONLYOFFICE/core)转换成docx|docx、doc、wps等|\*字体问题；有密码文档问题|
 |表格|✅|[luckyexcel](https://github.com/dream-num/Luckyexcel) |[x2t](https://github.com/ONLYOFFICE/core)转换成xlsx|xlsx、xls、csv、et等|\*字体问题；有密码文档问题|
 |演示|✅|同pdf|[x2t](https://github.com/ONLYOFFICE/core)转换成pdf|pptx、ppt、dps等|\*字体问题；有密码文档问题|
-|iWork|||转换成上述格式|pages、numbers、key等||
+|iWork|⌛|h5原生|[pages2html](https://github.com/dunhamsteve/iwork)转换成html|pages、numbers、key等||
 |文本|✅|同docx|[x2t](https://github.com/ONLYOFFICE/core)转换成docx|txt、json/toml/yml/config/xml等|enca/file检测编码防止中文乱码|
 |代码||md代码染色 / WebIDE|-|cpp、c、h、java、py、go、php、js、html、css等|enca/file检测编码防止中文乱码|
 |设计|✅|同图片|[cad2x](https://github.com/orcastor/cad2x-converter)转换成png|dwg、dwt、dxf等|
@@ -23,7 +23,7 @@
 |音频||[aPlayer](https://github.com/DIYgod/APlayer)/[cPlayer](https://github.com/MoePlayer/cPlayer)|-|mp3,wma,wav,ape,flac,ogg,aac等|支持匹配封面、lrc歌词文件|
 |存档|||写到临时目录解压|rar、zip、7z等|有密码的文档|
 |备份|||imobax & abe|iOS备份目录，安卓备份ab文件等|有密码的备份|
-|图标||ico/svg|图片 / PE格式解析|desktop.ini、dmg、exe、apk、*.app目录等|
+|图标||h5原生ico/svg|图片 / PE格式解析|desktop.ini、dmg、exe、apk、*.app目录等|
 
 ## 注意事项：
 - 如果转换插件在docker镜像中部署，需要配置`ORCAS_DOCKER_EXEC="docker exec -i <container_id>"`环境变量，其中`container_id`为容器的id值
