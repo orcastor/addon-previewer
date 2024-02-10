@@ -13,6 +13,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/orcastor/iwork-converter/iwork2html"
 	"github.com/orcastor/orcas/core"
 	"github.com/orcastor/orcas/rpc/util"
 	"github.com/orcastor/orcas/sdk"
@@ -34,9 +35,24 @@ func init() {
 
 var hanlder = core.NewLocalHandler()
 
+var cadTypes = map[string]bool{
+	"dwg": true,
+	"dxf": true,
+}
+
+var iworkTypes = map[string]bool{
+	"pages":   true,
+	"numbers": true,
+	"key":     true,
+}
+
 var docConvTypes = map[string]string{
 	"dwg": "png",
 	"dxf": "png",
+
+	"pages":   "html",
+	"numbers": "html",
+	"key":     "html",
 
 	"dsp":  "pdf",
 	"ppt":  "pdf",
@@ -84,14 +100,18 @@ func get(ctx *gin.Context) {
 		return
 	}
 
-	if from == "dwg" || from == "dxf" {
-		// 转换格式
+	// 转换格式
+	if cadTypes[from] {
 		if err := cad2xConv(fromPath, toPath); err != nil {
 			util.AbortResponse(ctx, 100, err.Error())
 			return
 		}
+	} else if iworkTypes[from] {
+		if err := iwork2htmlConv(fromPath, toPath); err != nil {
+			util.AbortResponse(ctx, 100, err.Error())
+			return
+		}
 	} else {
-		// 转换格式
 		if err := x2tConv(fromPath, toPath); err != nil {
 			util.AbortResponse(ctx, 100, err.Error())
 			return
@@ -115,22 +135,6 @@ READ_TO_FILE:
 	}
 }
 
-func x2tConv(fromPath, toPath string) error {
-	var out bytes.Buffer
-	cmds := append(strings.Split(ORCAS_DOCKER_EXEC, " "),
-		"/opt/x2t/x2t",
-		fromPath,
-		toPath)
-	cmd := exec.Command(cmds[0], cmds[1:]...)
-	cmd.Stdout = &out
-	cmd.Stderr = &out
-	err := cmd.Run()
-	if err != nil {
-		elog.Errorf("x2tConv error: %+v", out.String())
-	}
-	return err
-}
-
 func cad2xConv(fromPath, toPath string) error {
 	var out bytes.Buffer
 	cmds := append(strings.Split(ORCAS_DOCKER_EXEC, " "),
@@ -147,6 +151,30 @@ func cad2xConv(fromPath, toPath string) error {
 	err := cmd.Run()
 	if err != nil {
 		elog.Errorf("cad2xConv error: %+v", out.String())
+	}
+	return err
+}
+
+func iwork2htmlConv(fromPath, toPath string) error {
+	if err := iwork2html.Convert(fromPath, toPath); err != nil {
+		elog.Errorf("iwork2htmlConv error: %+v", err)
+		return err
+	}
+	return nil
+}
+
+func x2tConv(fromPath, toPath string) error {
+	var out bytes.Buffer
+	cmds := append(strings.Split(ORCAS_DOCKER_EXEC, " "),
+		"/opt/x2t/x2t",
+		fromPath,
+		toPath)
+	cmd := exec.Command(cmds[0], cmds[1:]...)
+	cmd.Stdout = &out
+	cmd.Stderr = &out
+	err := cmd.Run()
+	if err != nil {
+		elog.Errorf("x2tConv error: %+v", out.String())
 	}
 	return err
 }
@@ -209,7 +237,7 @@ func thumbnail(ctx *gin.Context) {
 
 	to := strings.ToLower(ctx.Query("nt")) // to无法注入，不在白名单会直接返回
 	if !outTypes[to] {
-		util.AbortResponse(ctx, 400, errors.New("not supported format"))
+		util.AbortResponse(ctx, 400, "not supported format")
 		return
 	}
 
@@ -228,7 +256,7 @@ func thumbnail(ctx *gin.Context) {
 	}
 
 	// 转换缩略图
-	if err := vipsConv(fromPath, toPath); err != nil {
+	if err := vipsConv(fromPath, toPath, w, h); err != nil {
 		util.AbortResponse(ctx, 100, err.Error())
 		return
 	}

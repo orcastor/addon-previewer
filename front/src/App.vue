@@ -10,6 +10,7 @@ import pdf from '@/comps/Pdf.vue';
 import img from '@/comps/Img.vue';
 import docx from '@/comps/Docx.vue';
 import xlsx from '@/comps/Xlsx.vue';
+import html from '@/comps/Html.vue';
 const comp = shallowRef(none);
 const query = ref('');
 
@@ -23,8 +24,6 @@ const init = () => {
   case 'pdf':
     comp.value = pdf;
     break;
-  case 'dwg':
-  case 'dxf':
   case 'jpg':
   case 'jpeg':
   case 'png':
@@ -53,6 +52,15 @@ const init = () => {
   case 'csv':
   case 'xlsx':
     comp.value = xlsx;
+    break;
+  case 'dwg':
+  case 'dxf':
+    comp.value = img;
+    break;
+  case 'pages':
+  case 'numbers':
+  case 'key':
+    comp.value = html;
     break;
   default:
     comp.value = none;

@@ -14,7 +14,7 @@
 |文字|✅|[docxjs](https://www.npmjs.com/package/docx-preview)|[x2t](https://github.com/ONLYOFFICE/core)转换成docx|docx、doc、wps等|\*字体问题；有密码文档问题|
 |表格|✅|[luckyexcel](https://github.com/dream-num/Luckyexcel) |[x2t](https://github.com/ONLYOFFICE/core)转换成xlsx|xlsx、xls、csv、et等|\*字体问题；有密码文档问题|
 |演示|✅|同pdf|[x2t](https://github.com/ONLYOFFICE/core)转换成pdf|pptx、ppt、dps等|\*字体问题；有密码文档问题|
-|iWork|⌛|h5原生|[iwork2html](https://github.com/dunhamsteve/iwork)转换成html|pages、numbers、key等||
+|iWork|✅|h5原生|[iwork2html](https://github.com/orcastor/iwork-converter)转换成html|pages、numbers、key等||
 |文本|✅|同docx|[x2t](https://github.com/ONLYOFFICE/core)转换成docx|txt、json/toml/yml/config/xml等|enca/file检测编码防止中文乱码|
 |代码||md代码染色 / WebIDE|-|cpp、c、h、java、py、go、php、js、html、css等|enca/file检测编码防止中文乱码|
 |设计|✅|同图片|[cad2x](https://github.com/orcastor/cad2x-converter)转换成png|dwg、dwt、dxf等|
