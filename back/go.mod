@@ -218,7 +218,7 @@ require (
 	github.com/orca-zhang/borm v0.0.0-20220921122740-135bb95b3a65 // indirect
 	github.com/orca-zhang/ecache v1.1.1 // indirect
 	github.com/orca-zhang/idgen v0.0.0-20220909041521-2662ff4c3c3e // indirect
-	github.com/orcastor/iwork-converter v0.0.0-20240210060517-6c34cf90f34e // indirect
+	github.com/orcastor/iwork-converter v0.0.0-20240210062724-07243beb6209 // indirect
 	github.com/pact-foundation/pact-go v1.0.4 // indirect
 	github.com/pascaldekloe/goe v0.0.0-20180627143212-57f6aae5913c // indirect
 	github.com/pborman/uuid v1.2.0 // indirect
