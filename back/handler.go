@@ -179,6 +179,23 @@ func x2tConv(fromPath, toPath string) error {
 	return err
 }
 
+func ico(ctx *gin.Context) {
+	bktID, _ := strconv.ParseInt(ctx.Query("b"), 10, 64)
+	id, _ := strconv.ParseInt(ctx.Query("i"), 10, 64)
+
+	// autorun.inf、desktop.ini、*.dmg、*.exe、*.apk、*.desktop(*.AppImage/*.run)、*.app
+	switch strings.ToLower(filepath.Ext(ctx.Query("n"))[1:]) {
+	case "dmg":
+	case "exe":
+	case "apk":
+	case "ini":
+	case "inf":
+	case "desktop":
+
+	case "app":
+	}
+}
+
 var thumbSupport = map[string]bool{
 	"csv":  true,
 	"bmp":  true,
