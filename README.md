@@ -18,12 +18,12 @@
 |文本|✅|同docx|[x2t](https://github.com/ONLYOFFICE/core)转换成docx|txt、json/toml/yml/config/xml等|enca/file检测编码防止中文乱码|
 |代码||md代码染色 / WebIDE|-|cpp、c、h、java、py、go、php、js、html、css等|enca/file检测编码防止中文乱码|
 |设计|✅|同图片|[cad2x](https://github.com/orcastor/cad2x-converter)转换成png|dwg、dwt、dxf等|\* 字体问题；代码页问题|
-|图片|✅|[el-image](https://element.eleme.cn/#/zh-CN/component/image)|[vips](https://github.com/libvips/libvips)转换缩略图|png、jpg、gif、bmp、ico、eps、psd等；文档需要先获取首页截图|gif需要处理多帧；GM支持OpenMP加速|
+|图片|✅|[el-image](https://element.eleme.cn/#/zh-CN/component/image)|[vips](https://github.com/libvips/libvips)转换缩略图|png、jpg、gif、bmp、ico、icns、eps、psd等；文档需要先获取首页截图|gif需要处理多帧；vips支持SIMD/OpenMP加速|
 |视频|||[ffmpeg](https://github.com/FFmpeg/FFmpeg)转换成HLS(m3u8)|mp4、wmv、mkv等|fps和码率；可以尝试h.265；支持GPU加速（OpenCL/Vulkan）|
 |音频||[aPlayer](https://github.com/DIYgod/APlayer)/[cPlayer](https://github.com/MoePlayer/cPlayer)|-|mp3,wma,wav,ape,flac,ogg,aac等|支持匹配封面、lrc歌词文件|
 |存档|||写到临时目录解压|rar、zip、7z、dmg、iso等|有密码的文档|
 |备份|||imobax & abe|iOS备份目录，安卓备份ab文件等|有密码的备份|
-|图标||h5原生ico/svg|图片 / PE格式解析|autorun.inf、desktop.ini、\*.dmg、\*.exe、\*.apk、\*.desktop(\*.AppImage/\*.run)、\*.apk、\*.app目录等|
+|图标||h5原生ico/svg|图片 / PE格式解析|\*.dmg、\*.exe、\*.apk、配置文件：autorun.inf、desktop.ini、\*.desktop(\*.AppImage/\*.run)、特殊目录：\*.apk、\*.app目录等|
 
 ## 注意事项：
 - 如果转换插件在docker镜像中部署，需要配置`ORCAS_DOCKER_EXEC="docker exec -i <container_id>"`环境变量，其中`container_id`为容器的id值
