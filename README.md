@@ -23,7 +23,7 @@
 |音频||[aPlayer](https://github.com/DIYgod/APlayer)/[cPlayer](https://github.com/MoePlayer/cPlayer)|-|mp3,wma,wav,ape,flac,ogg,aac等|支持匹配封面、lrc歌词文件|
 |存档|||写到临时目录解压|rar、zip、7z、dmg、iso等|有密码的文档|
 |备份|||imobax & abe|iOS备份目录，安卓备份ab文件等|有密码的备份|
-|图标||h5原生ico/svg|图片 / PE格式解析|\*.dmg、\*.exe、\*.apk、配置文件：autorun.inf、desktop.ini、\*.desktop(\*.AppImage/\*.run)、特殊目录：\*.apk、\*.app目录等|
+|图标||h5原生ico|图片 / PE格式解析|\*.dmg、\*.exe、\*.apk、配置文件：autorun.inf、desktop.ini、\*.desktop(\*.AppImage/\*.run)、特殊目录：\*.apk、\*.app目录等|
 
 ## 注意事项：
 - 如果转换插件在docker镜像中部署，需要配置`ORCAS_DOCKER_EXEC="docker exec -i <container_id>"`环境变量，其中`container_id`为容器的id值

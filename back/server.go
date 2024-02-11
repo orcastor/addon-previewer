@@ -24,7 +24,7 @@ func main() {
 		api := server.Group("/prvw/api")
 		api.GET("/get", get)
 		api.GET("/ico", ico)
-		api.GET("/thumbnail", thumbnail)
+		api.GET("/thumb", thumb)
 		return server
 	}()).Run(); err != nil {
 		elog.Panic("startup", elog.Any("err", err))
