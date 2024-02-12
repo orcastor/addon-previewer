@@ -23,7 +23,6 @@ func main() {
 
 		api := server.Group("/prvw/api")
 		api.GET("/get", get)
-		api.GET("/ico", ico)
 		api.GET("/thumb", thumb)
 		return server
 	}()).Run(); err != nil {
