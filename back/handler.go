@@ -13,6 +13,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/orcastor/f2ico"
 	"github.com/orcastor/iwork-converter/iwork2html"
 	"github.com/orcastor/orcas/core"
 	"github.com/orcastor/orcas/rpc/util"
@@ -256,6 +257,7 @@ var outTypes = map[string]bool{
 	"png":  true,
 	"gif":  true,
 	"webp": true,
+	"ico":  true,
 }
 
 func thumb(ctx *gin.Context) {
@@ -270,8 +272,6 @@ func thumb(ctx *gin.Context) {
 		util.AbortResponse(ctx, 400, "not supported format")
 		return
 	}
-
-	// TODO：如果是获取图标，用f2ico处理
 
 	// TODO：如果是文档格式，先用x2t获取文档缩略图
 
@@ -297,8 +297,20 @@ func thumb(ctx *gin.Context) {
 		return
 	}
 
-	// 转换缩略图
-	if err := vipsConv(fromPath, toPath, w, h); err != nil {
+	// 如果是获取图标，用f2ico处理
+	if icoTypes[from] {
+		f, err := os.OpenFile(toPath, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
+		if err != nil {
+			panic(err)
+		}
+		defer f.Close()
+
+		if err = f2ico.F2ICO(f, fromPath, f2ico.Config{Width: int(w), Height: int(h)}); err != nil {
+			util.AbortResponse(ctx, 100, err.Error())
+			return
+		}
+	} else if err := vipsConv(fromPath, toPath, w, h); err != nil {
+		// 转换缩略图
 		util.AbortResponse(ctx, 100, err.Error())
 		return
 	}

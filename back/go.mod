@@ -44,6 +44,7 @@ require (
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bgentry/speakeasy v0.1.0 // indirect
 	github.com/casbin/casbin/v2 v2.1.2 // indirect
+	github.com/cbeer/jpeg2000 v0.0.0-20200310160555-fbd1cc642f07 // indirect
 	github.com/cenkalti/backoff v2.2.1+incompatible // indirect
 	github.com/cenkalti/backoff/v4 v4.1.3 // indirect
 	github.com/census-instrumentation/opencensus-proto v0.2.1 // indirect
@@ -218,6 +219,7 @@ require (
 	github.com/orca-zhang/borm v0.0.0-20220921122740-135bb95b3a65 // indirect
 	github.com/orca-zhang/ecache v1.1.1 // indirect
 	github.com/orca-zhang/idgen v0.0.0-20220909041521-2662ff4c3c3e // indirect
+	github.com/orcastor/f2ico v0.0.0-20240213122118-77fc23a3a2e3 // indirect
 	github.com/orcastor/iwork-converter v0.0.0-20240210062724-07243beb6209 // indirect
 	github.com/pact-foundation/pact-go v1.0.4 // indirect
 	github.com/pascaldekloe/goe v0.0.0-20180627143212-57f6aae5913c // indirect
@@ -266,6 +268,7 @@ require (
 	github.com/tklauser/go-sysconf v0.3.6 // indirect
 	github.com/tklauser/numcpus v0.2.2 // indirect
 	github.com/tmc/grpc-websocket-proxy v0.0.0-20170815181823-89b8d40f7ca8 // indirect
+	github.com/tmc/icns v0.0.0-20171229010138-5677fdfa7a3e // indirect
 	github.com/ugorji/go v1.2.7 // indirect
 	github.com/ugorji/go/codec v1.2.7 // indirect
 	github.com/ulikunitz/xz v0.5.9 // indirect
@@ -295,7 +298,7 @@ require (
 	golang.org/x/arch v0.0.0-20180920145803-b19384d3c130 // indirect
 	golang.org/x/crypto v0.19.0 // indirect
 	golang.org/x/exp v0.0.0-20200224162631-6cc2880d07d6 // indirect
-	golang.org/x/image v0.0.0-20190802002840-cff245a6509b // indirect
+	golang.org/x/image v0.15.0 // indirect
 	golang.org/x/lint v0.0.0-20200302205851-738671d3881b // indirect
 	golang.org/x/mobile v0.0.0-20190719004257-d2bd2a29d028 // indirect
 	golang.org/x/mod v0.8.0 // indirect
@@ -319,6 +322,7 @@ require (
 	gopkg.in/errgo.v2 v2.1.0 // indirect
 	gopkg.in/fsnotify.v1 v1.4.7 // indirect
 	gopkg.in/gcfg.v1 v1.2.3 // indirect
+	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/resty.v1 v1.12.0 // indirect
 	gopkg.in/src-d/go-billy.v4 v4.3.0 // indirect
 	gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7 // indirect
