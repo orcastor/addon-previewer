@@ -13,7 +13,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/orcastor/f2ico"
+	"github.com/orcastor/fico"
 	"github.com/orcastor/iwork-converter/iwork2html"
 	"github.com/orcastor/orcas/core"
 	"github.com/orcastor/orcas/rpc/util"
@@ -305,7 +305,7 @@ func thumb(ctx *gin.Context) {
 		}
 		defer f.Close()
 
-		if err = f2ico.F2ICO(f, fromPath, f2ico.Config{Width: int(w), Height: int(h)}); err != nil {
+		if err = fico.F2ICO(f, fromPath, f2ico.Config{Width: int(w), Height: int(h)}); err != nil {
 			util.AbortResponse(ctx, 100, err.Error())
 			return
 		}
