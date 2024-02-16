@@ -45,11 +45,13 @@ const init = () => {
   case 'yaml':
   case 'config':
   case 'wps':
+  case 'doc':
   case 'docx':
     comp.value = docx;
     break;
   case 'et':
   case 'csv':
+  case 'xls':
   case 'xlsx':
     comp.value = xlsx;
     break;
@@ -60,7 +62,7 @@ const init = () => {
   case 'pages':
   case 'numbers':
   case 'key':
-    comp.value = html;
+    comp.value = docx;
     break;
   default:
     comp.value = none;
