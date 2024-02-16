@@ -34,7 +34,7 @@
 
 #### 部署方法：
 
-- 把[back/x2t](https://github.com/orcastor/addon-previewer/tree/main/back/x2t)下的`common`和对应平台（`linux_arm64`/`linux_x64`）目录下的文件都拷贝到`/opt/x2t`下
+- 把[back/x2t](https://github.com/orcastor/addon-previewer/tree/main/back/x2t)下的`common`和对应平台（`linux_arm64`/`linux_amd64`）目录下的文件都拷贝到`/opt/x2t`下
 - 执行`sh allfontsgen.sh`安装字体文件、生成字体列表
 
 #### 方案优势：
@@ -152,7 +152,7 @@
 
 #### 部署方法：
 
-- 把[back/cad2x](https://github.com/orcastor/addon-previewer/tree/main/back/cad2x)下的`common`和对应平台（`linux_arm64`/`linux_x64`）目录下的`cad2x`文件都拷贝到`/opt/cad2x`下
+- 把[back/cad2x](https://github.com/orcastor/addon-previewer/tree/main/back/cad2x)下的`common`和对应平台（`linux_arm64`/`linux_amd64`）目录下的`cad2x`文件都拷贝到`/opt/cad2x`下
 
 #### 方案优势：
 

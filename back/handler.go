@@ -51,9 +51,9 @@ var docConvTypes = map[string]string{
 	"dwg": "png",
 	"dxf": "png",
 
-	"pages":   "html",
-	"numbers": "html",
-	"key":     "html",
+	"pages":   "docx",
+	"numbers": "docx",
+	"key":     "docx",
 
 	"dsp":  "pdf",
 	"ppt":  "pdf",
@@ -109,7 +109,12 @@ func get(ctx *gin.Context) {
 			return
 		}
 	} else if iworkTypes[from] {
-		if err := iwork2htmlConv(fromPath, toPath); err != nil {
+		toPathHtml := filepath.Join(ORCAS_CACHE, fmt.Sprintf("%d.html", id))
+		if err := iwork2htmlConv(fromPath, toPathHtml); err != nil {
+			util.AbortResponse(ctx, 100, err.Error())
+			return
+		}
+		if err := x2tConv(toPathHtml, toPath); err != nil {
 			util.AbortResponse(ctx, 100, err.Error())
 			return
 		}
@@ -277,7 +282,7 @@ func thumb(ctx *gin.Context) {
 
 	// TODO：如果涉及隐私文件，返回不支持获取缩略图
 
-	to := strings.ToLower(ctx.Query("nt")) // to无法注入，不在白名单会直接返回
+	to := strings.ToLower(ctx.Query("tt")) // to无法注入，不在白名单会直接返回
 	if !outTypes[to] {
 		util.AbortResponse(ctx, 400, "not supported format")
 		return
@@ -305,7 +310,7 @@ func thumb(ctx *gin.Context) {
 		}
 		defer f.Close()
 
-		if err = fico.F2ICO(f, fromPath, f2ico.Config{Width: int(w), Height: int(h)}); err != nil {
+		if err = fico.F2ICO(f, fromPath, fico.Config{Width: int(w), Height: int(h)}); err != nil {
 			util.AbortResponse(ctx, 100, err.Error())
 			return
 		}
