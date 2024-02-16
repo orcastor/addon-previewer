@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import docx from 'docx-preview';
+import { renderAsync } from 'docx-preview';
 import { ref, onMounted, defineProps } from 'vue';
 import { store } from "@/store";
 import axios from "axios";
@@ -26,7 +26,7 @@ const load = async () => {
     url: '//' + location.host + '/prvw/api/get?' + props.query + '&token=' + store.token,
     responseType: 'blob',
   })
-  docx.renderAsync(res.data, refFile.value);
+  renderAsync(res.data, refFile.value);
   isLoading.value = false;
 };
 </script>

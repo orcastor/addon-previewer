@@ -585,8 +585,8 @@ github.com/orca-zhang/ecache v1.1.1 h1:krk4+/ihsLPg9/k2zYeRa7dNespTQsFnRcLWaJGFN
 github.com/orca-zhang/ecache v1.1.1/go.mod h1:1/6HCddx1iAbafDyRdddq5v/0rZf5sCU/fkLZ3BhciQ=
 github.com/orca-zhang/idgen v0.0.0-20220909041521-2662ff4c3c3e h1:Ae9G+JXfh/uot6qX0yJ9av+NqQaspOsuJ/tYYeNu6eU=
 github.com/orca-zhang/idgen v0.0.0-20220909041521-2662ff4c3c3e/go.mod h1:QgMA6kZTutcdAVcYrWX06UvJ8kI/+7Bx5RaREcN+3Qg=
-github.com/orcastor/f2ico v0.0.0-20240213122118-77fc23a3a2e3 h1:Gl8080J1GbRaFF2JQbbjJxgn0cHYC3mSzR4NR0DNSSs=
-github.com/orcastor/f2ico v0.0.0-20240213122118-77fc23a3a2e3/go.mod h1:GlzNf3TISTQhXTOWwh6tSIePVW9Pv/rohoni6HW3Vq8=
+github.com/orcastor/fico v0.0.0-20240216055028-1105802c134f h1:JjbZc7MfuLWBznjVafHsZm1y7dVsOssOW3FjzdLuE0U=
+github.com/orcastor/fico v0.0.0-20240216055028-1105802c134f/go.mod h1:uUM4LnWhBuxtAKHWiMFtPg16OZGHfWVRLlCApKOmePI=
 github.com/orcastor/iwork-converter v0.0.0-20240210062724-07243beb6209 h1:9l3rZJh5/nU/aRiKK223i/fXHlSMw7xMNK2AUGq4ZXA=
 github.com/orcastor/iwork-converter v0.0.0-20240210062724-07243beb6209/go.mod h1:A5hxrp60puZl/SB67Z1jro8ScXbqG3hjWPcOz5J8e/s=
 github.com/orcastor/orcas v0.0.0-20221110042346-d17a55120671 h1:r5AalQT1GWjteY6RzAVgBkuDbWAl0++vO6IZSwxOr6s=
