@@ -222,6 +222,7 @@ var icoTypes = map[string]bool{
 	"dmg":     true,
 	"exe":     true,
 	"apk":     true,
+	"ipa":     true,
 	"inf":     true,
 	"ini":     true,
 	"desktop": true,
@@ -257,12 +258,12 @@ var thumbSupport = map[string]bool{
 	"vips": true,
 }
 
-var outTypes = map[string]bool{
-	"jpg":  true,
-	"png":  true,
-	"gif":  true,
-	"webp": true,
-	"ico":  true,
+var outMimeTypes = map[string]string{
+	"jpg":  "image/jpeg",
+	"png":  "image/png",
+	"gif":  "image/gif",
+	"webp": "image/webp",
+	"ico":  "image/x-icon",
 }
 
 func thumb(ctx *gin.Context) {
@@ -282,14 +283,18 @@ func thumb(ctx *gin.Context) {
 
 	// TODO：如果涉及隐私文件，返回不支持获取缩略图
 
-	to := strings.ToLower(ctx.Query("tt")) // to无法注入，不在白名单会直接返回
-	if !outTypes[to] {
+	to := strings.ToLower(ctx.Param("to")) // to无法注入，不在白名单会直接返回
+	mimeType := outMimeTypes[to]
+	if mimeType == "" {
 		util.AbortResponse(ctx, 400, "not supported format")
 		return
 	}
 
 	fromPath := filepath.Join(ORCAS_CACHE, fmt.Sprintf("%d.%s", id, from)) // id无法注入，强制转成数字
 	toPath := filepath.Join(ORCAS_CACHE, fmt.Sprintf("%d_%dx%d.%s", id, w, h, to))
+
+	ctx.Header("Content-Type", mimeType)
+	ctx.Header("Content-Disposition", fmt.Sprintf("attachment; filename*=utf-8''%s", filepath.Base(toPath)))
 
 	// 先看转换后文件生成了没有
 	if st, err := os.Stat(toPath); err == nil && st.Size() > 0 {
@@ -310,7 +315,10 @@ func thumb(ctx *gin.Context) {
 		}
 		defer f.Close()
 
-		if err = fico.F2ICO(f, fromPath, fico.Config{Width: int(w), Height: int(h)}); err != nil {
+		bufW := bufio.NewWriter(f)
+		defer bufW.Flush()
+
+		if err = fico.F2ICO(bufW, fromPath, fico.Config{Format: to, Width: int(w), Height: int(h)}); err != nil {
 			util.AbortResponse(ctx, 100, err.Error())
 			return
 		}
@@ -403,8 +411,10 @@ func writeTo(ctx *gin.Context, bktID, id int64, writer io.Writer, direct bool) e
 		}
 	}
 
-	ctx.Header("Content-Type", "application/octet-stream")
-	ctx.Header("Content-Disposition", fmt.Sprintf("attachment; filename*=utf-8''%s", url.QueryEscape(o[0].Name)))
+	if direct {
+		ctx.Header("Content-Type", "application/octet-stream")
+		ctx.Header("Content-Disposition", fmt.Sprintf("attachment; filename*=utf-8''%s", url.QueryEscape(o[0].Name)))
+	}
 
 	acceptEncoding := ctx.Request.Header["Accept-Encoding"]
 

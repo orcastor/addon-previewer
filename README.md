@@ -10,20 +10,20 @@
 
 |类型|进度|展示|兼容转换方案|支持格式|注意事项|
 |-|-|-|-|-|-|
-|pdf|✅|[vue-pdf-embed](https://github.com/hrynko/vue-pdf-embed)|-|pdf|支持有密码文件|
+|pdf|✅|[vue-pdf-embed](https://github.com/hrynko/vue-pdf-embed)|-| pdf|支持有密码文件|
 |文字|✅|[docxjs](https://www.npmjs.com/package/docx-preview)|[x2t](https://github.com/ONLYOFFICE/core)转换成docx|docx、doc、wps等|\* 字体问题；有密码文档问题|
-|表格|✅|[luckyexcel](https://github.com/dream-num/Luckyexcel) |[x2t](https://github.com/ONLYOFFICE/core)转换成xlsx|xlsx、xls、csv、et等|\* 字体问题；有密码文档问题|
+|表格|✅|[luckyexcel](https://github.com/dream-num/Luckyexcel)|[x2t](https://github.com/ONLYOFFICE/core)转换成xlsx|xlsx、xls、csv、et等\* 字体问题；有密码文档问题|
 |演示|✅|同pdf|[x2t](https://github.com/ONLYOFFICE/core)转换成pdf|pptx、ppt、dps等|\* 字体问题；有密码文档问题|
 |iWork|✅|h5原生|[iwork2html](https://github.com/orcastor/iwork-converter)转换成html|pages、numbers、key等|\* 临时方案|
 |文本|✅|同docx|[x2t](https://github.com/ONLYOFFICE/core)转换成docx|txt、json/toml/yml/config/xml等|enca/file检测编码防止中文乱码|
 |代码||md代码染色 / WebIDE|-|cpp、c、h、java、py、go、php、js、html、css等|enca/file检测编码防止中文乱码|
 |设计|✅|同图片|[cad2x](https://github.com/orcastor/cad2x-converter)转换成png|dwg、dwt、dxf等|\* 字体问题；代码页问题|
-|图片|✅|[el-image](https://element.eleme.cn/#/zh-CN/component/image)|[vips](https://github.com/libvips/libvips)转换缩略图|png、jpg、gif、bmp、ico、icns、eps、psd等；文档需要先获取首页截图|gif需要处理多帧；vips支持SIMD/OpenMP加速|
+|图片|✅|[el-image](https://element.eleme.cn/#/zh-CN/component/image)|[vips](https://github.com/libvips/libvips)转换缩略图| png、jpg、gif、bmp、ico、icns、eps、psd等；文档需要先获取首页截图|gif需要处理多帧；vips支持SIMD/OpenMP加速|
 |视频|⌛|[vue-plyr](https://github.com/redxtech/vue-plyr)|[ffmpeg](https://github.com/FFmpeg/FFmpeg)转换成HLS(m3u8)|mp4、wmv、mkv等|fps和码率；可以尝试h.265；支持GPU加速（OpenCL/Vulkan）|
-|音频||[aPlayer](https://github.com/DIYgod/APlayer)/[cPlayer](https://github.com/MoePlayer/cPlayer)|-|mp3,wma,wav,ape,flac,ogg,aac等|支持匹配封面、lrc歌词文件|
-|存档|⌛||写到临时目录解压|rar、zip、7z、dmg、iso等|有密码的文档|
+|音频||[aPlayer](https://github.com/DIYgod/APlayer)/[cPlayer](https://github.com/MoePlayer/cPlayer)|-|mp3,wma,wav,ape,flac,ogg,aac等||
+|存档|⌛||写到临时目录|rar、zip、7z、dmg、iso等|有密码的文档|
 |备份|||imobax & abe|iOS备份目录，安卓备份ab文件等|有密码的备份|
-|图标|⌛|h5原生|[fico](https://github.com/orcastor/fico)转换ico|exe、dll、mui、mun、apk、autorun.inf、desktop.ini、\*.desktop(\*.AppImage/\*.run)、\*.app目录等|
+|图标|⌛|h5原生|[fico](https://github.com/orcastor/fico)转换ico|exe、dll、mui、mun、apk、ipa、autorun.inf、desktop.ini、\*.desktop(\*.AppImage/\*.run)、\*.app目录等||
 
 ## 注意事项：
 - 如果转换插件在docker镜像中部署，需要配置`ORCAS_DOCKER_EXEC="docker exec -i <container_id>"`环境变量，其中`container_id`为容器的id值

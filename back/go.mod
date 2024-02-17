@@ -29,10 +29,13 @@ require (
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751 // indirect
 	github.com/alecthomas/units v0.0.0-20190924025748-f65c72e2690d // indirect
 	github.com/alibaba/sentinel-golang v1.0.3 // indirect
+	github.com/andrianbdn/iospng v0.0.0-20180730113000-dccef1992541 // indirect
 	github.com/andybalholm/brotli v1.0.1 // indirect
 	github.com/antihax/optional v1.0.0 // indirect
 	github.com/antlr/antlr4/runtime/Go/antlr v0.0.0-20220418222510-f25a4f6275ed // indirect
 	github.com/apache/thrift v0.13.0 // indirect
+	github.com/appflight/androidbinary v1.0.3 // indirect
+	github.com/appflight/apkparser v1.0.1 // indirect
 	github.com/armon/circbuf v0.0.0-20150827004946-bbbad097214e // indirect
 	github.com/armon/go-metrics v0.0.0-20180917152333-f0300d1749da // indirect
 	github.com/armon/go-radix v0.0.0-20180808171621-7fddfc383310 // indirect
@@ -219,7 +222,7 @@ require (
 	github.com/orca-zhang/borm v0.0.0-20220921122740-135bb95b3a65 // indirect
 	github.com/orca-zhang/ecache v1.1.1 // indirect
 	github.com/orca-zhang/idgen v0.0.0-20220909041521-2662ff4c3c3e // indirect
-	github.com/orcastor/fico v0.0.0-20240216055028-1105802c134f // indirect
+	github.com/orcastor/fico v0.0.0-20240217074226-5afce1bad4fb // indirect
 	github.com/orcastor/iwork-converter v0.0.0-20240210062724-07243beb6209 // indirect
 	github.com/pact-foundation/pact-go v1.0.4 // indirect
 	github.com/pascaldekloe/goe v0.0.0-20180627143212-57f6aae5913c // indirect
