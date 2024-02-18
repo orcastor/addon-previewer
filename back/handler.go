@@ -259,6 +259,12 @@ var thumbSupport = map[string]bool{
 	"vips": true,
 }
 
+var showTypes = map[string]bool{
+	"docx": true,
+	"pptx": true,
+	"pdf":  true,
+}
+
 var outMimeTypes = map[string]string{
 	"jpg":  "image/jpeg",
 	"png":  "image/png",
@@ -275,7 +281,7 @@ func thumb(ctx *gin.Context) {
 	h, _ := strconv.ParseInt(ctx.Query("h"), 10, 64)
 
 	from := strings.ToLower(ctx.Query("t")) // from无法注入，不在白名单会直接返回
-	if !thumbSupport[from] && !icoTypes[from] && docConvTypes[from] == "" {
+	if !thumbSupport[from] && !icoTypes[from] && docConvTypes[from] == "" && !showTypes[from] {
 		util.AbortResponse(ctx, 400, "not supported format")
 		return
 	}
@@ -323,10 +329,16 @@ func thumb(ctx *gin.Context) {
 			}
 		}
 
+		if previewJPG == nil {
+			util.AbortResponse(ctx, 100, "no preview.jpg found")
+			return
+		}
+
 		toPathJPG := filepath.Join(ORCAS_CACHE, fmt.Sprintf("%d.jpg", id))
 		f, err := os.OpenFile(toPathJPG, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0666)
 		if err != nil {
-			panic(err)
+			util.AbortResponse(ctx, 100, err.Error())
+			return
 		}
 		defer f.Close()
 
@@ -343,7 +355,7 @@ func thumb(ctx *gin.Context) {
 		}
 
 		fromPath = toPathJPG
-	} else if _, ok := docConvTypes[from]; ok {
+	} else if _, ok := docConvTypes[from]; ok || showTypes[from] {
 		toPathPNG := filepath.Join(ORCAS_CACHE, fmt.Sprintf("%d.png", id))
 		if err := x2tConv(fromPath, toPathPNG); err != nil {
 			util.AbortResponse(ctx, 100, err.Error())
