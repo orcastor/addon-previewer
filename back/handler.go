@@ -177,7 +177,7 @@ func langID2CodePage(langID int64) string {
 func cad2xConv(fromPath, toPath string, langID int64) error {
 	var out bytes.Buffer
 	cmds := append(strings.Split(ORCAS_DOCKER_EXEC, " "),
-		"/opt/cad2x/cad2pdf",
+		"/opt/cad2x/cad2x",
 		fromPath,
 		"-o", toPath,
 		"-ac",
