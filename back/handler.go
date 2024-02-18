@@ -276,6 +276,7 @@ var outMimeTypes = map[string]string{
 func thumb(ctx *gin.Context) {
 	bktID, _ := strconv.ParseInt(ctx.Query("b"), 10, 64)
 	id, _ := strconv.ParseInt(ctx.Query("i"), 10, 64)
+	langID, _ := strconv.ParseInt(ctx.Query("l"), 10, 64) // 预留的语言id
 
 	w, _ := strconv.ParseInt(ctx.Query("w"), 10, 64)
 	h, _ := strconv.ParseInt(ctx.Query("h"), 10, 64)
@@ -357,7 +358,15 @@ func thumb(ctx *gin.Context) {
 		fromPath = toPathJPG
 	} else if _, ok := docConvTypes[from]; ok || showTypes[from] {
 		toPathPNG := filepath.Join(ORCAS_CACHE, fmt.Sprintf("%d.png", id))
-		if err := x2tConv(fromPath, toPathPNG); err != nil {
+
+		if cadTypes[from] {
+			if err := cad2xConv(fromPath, toPathPNG, langID); err != nil {
+				util.AbortResponse(ctx, 100, err.Error())
+				return
+			}
+
+			fromPath = toPathPNG
+		} else if err := x2tConv(fromPath, toPathPNG); err != nil {
 			util.AbortResponse(ctx, 100, err.Error())
 			return
 		}
