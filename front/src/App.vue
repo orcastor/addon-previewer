@@ -62,7 +62,7 @@ const init = () => {
   case 'pages':
   case 'numbers':
   case 'key':
-    comp.value = docx;
+    comp.value = html;
     break;
   default:
     comp.value = none;

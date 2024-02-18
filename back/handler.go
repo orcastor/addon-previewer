@@ -51,9 +51,9 @@ var docConvTypes = map[string]string{
 	"dwg": "png",
 	"dxf": "png",
 
-	"pages":   "docx",
-	"numbers": "docx",
-	"key":     "docx",
+	"pages":   "html",
+	"numbers": "html",
+	"key":     "html",
 
 	"dsp":  "pdf",
 	"ppt":  "pdf",
@@ -109,12 +109,7 @@ func get(ctx *gin.Context) {
 			return
 		}
 	} else if iworkTypes[from] {
-		toPathHtml := filepath.Join(ORCAS_CACHE, fmt.Sprintf("%d.html", id))
-		if err := iwork2htmlConv(fromPath, toPathHtml); err != nil {
-			util.AbortResponse(ctx, 100, err.Error())
-			return
-		}
-		if err := x2tConv(toPathHtml, toPath); err != nil {
+		if err := iwork2htmlConv(fromPath, toPath); err != nil {
 			util.AbortResponse(ctx, 100, err.Error())
 			return
 		}
@@ -175,21 +170,24 @@ func langID2CodePage(langID int64) string {
 }
 
 func cad2xConv(fromPath, toPath string, langID int64) error {
-	var out bytes.Buffer
-	cmds := append(strings.Split(ORCAS_DOCKER_EXEC, " "),
+	cmds := []string{
 		"/opt/cad2x/cad2x",
 		fromPath,
 		"-o", toPath,
 		"-ac",
 		"-e", langID2CodePage(langID),
 		"-f", "simsun",
-		"-l", "/opt/x2t/core-fonts")
+		"-l", "/opt/x2t/core-fonts"}
+	if ORCAS_DOCKER_EXEC != "" {
+		cmds = append(strings.Split(ORCAS_DOCKER_EXEC, " "), cmds...)
+	}
 	cmd := exec.Command(cmds[0], cmds[1:]...)
+	var out bytes.Buffer
 	cmd.Stdout = &out
 	cmd.Stderr = &out
 	err := cmd.Run()
 	if err != nil {
-		elog.Errorf("cad2xConv error: %+v", out.String())
+		elog.Errorf("cad2xConv error: %s %+v", strings.Join(cmds, " "), out.String())
 	}
 	return err
 }
@@ -203,18 +201,19 @@ func iwork2htmlConv(fromPath, toPath string) error {
 }
 
 func x2tConv(fromPath, toPath string) error {
-	var out bytes.Buffer
-	cmds := append(strings.Split(ORCAS_DOCKER_EXEC, " "),
+	cmds := []string{
 		"/opt/x2t/x2t",
 		fromPath,
-		toPath)
+		toPath}
+	if ORCAS_DOCKER_EXEC != "" {
+		cmds = append(strings.Split(ORCAS_DOCKER_EXEC, " "), cmds...)
+	}
 	cmd := exec.Command(cmds[0], cmds[1:]...)
+	var out bytes.Buffer
 	cmd.Stdout = &out
 	cmd.Stderr = &out
 	err := cmd.Run()
-	if err != nil {
-		elog.Errorf("x2tConv error: %+v", out.String())
-	}
+	elog.Errorf("x2tConv error: %s %+v", strings.Join(cmds, " "), out.String())
 	return err
 }
 
@@ -346,17 +345,20 @@ READ_OUTPUT_FILE:
 }
 
 func vipsConv(fromPath, toPath string, w, h int64) error {
-	var out bytes.Buffer
-	cmds := append(strings.Split(ORCAS_DOCKER_EXEC, " "), "/opt/vips/vipsthumbnail", fromPath,
+	cmds := []string{"/opt/vips/vipsthumbnail", fromPath,
 		"--size", fmt.Sprintf("%dx%d", w, h),
 		"--smartcrop", "attention",
-		"-o", toPath+"[keep=none]")
+		"-o", toPath + "[keep=none]"}
+	if ORCAS_DOCKER_EXEC != "" {
+		cmds = append(strings.Split(ORCAS_DOCKER_EXEC, " "), cmds...)
+	}
 	cmd := exec.Command(cmds[0], cmds[1:]...)
+	var out bytes.Buffer
 	cmd.Stdout = &out
 	cmd.Stderr = &out
 	err := cmd.Run()
 	if err != nil {
-		elog.Errorf("vipsConv error: %+v", out.String())
+		elog.Errorf("vipsConv error: %s %+v", strings.Join(cmds, " "), out.String())
 	}
 	return err
 }
