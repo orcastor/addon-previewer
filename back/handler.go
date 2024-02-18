@@ -1,6 +1,7 @@
 package main
 
 import (
+	"archive/zip"
 	"bufio"
 	"bytes"
 	"errors"
@@ -71,6 +72,7 @@ var docConvTypes = map[string]string{
 	"yaml":   "docx",
 	"xml":    "docx",
 	"config": "docx",
+	"xps":    "docx",
 }
 
 func get(ctx *gin.Context) {
@@ -273,12 +275,10 @@ func thumb(ctx *gin.Context) {
 	h, _ := strconv.ParseInt(ctx.Query("h"), 10, 64)
 
 	from := strings.ToLower(ctx.Query("t")) // from无法注入，不在白名单会直接返回
-	if !thumbSupport[from] && !icoTypes[from] {
+	if !thumbSupport[from] && !icoTypes[from] && docConvTypes[from] == "" {
 		util.AbortResponse(ctx, 400, "not supported format")
 		return
 	}
-
-	// TODO：如果是文档格式，先用x2t获取文档缩略图
 
 	// TODO：如果涉及隐私文件，返回不支持获取缩略图
 
@@ -306,18 +306,62 @@ func thumb(ctx *gin.Context) {
 		return
 	}
 
-	// 如果是获取图标，用f2ico处理
-	if icoTypes[from] {
-		f, err := os.OpenFile(toPath, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
+	// 如果是文档格式，先用x2t获取文档缩略图
+	if iworkTypes[from] {
+		r, err := zip.OpenReader(fromPath)
+		if err != nil {
+			util.AbortResponse(ctx, 100, err.Error())
+			return
+		}
+		defer r.Close()
+
+		var previewJPG *zip.File
+		for _, f := range r.File {
+			switch {
+			case strings.Contains(f.Name, "preview.jpg"):
+				previewJPG = f
+			}
+		}
+
+		toPathJPG := filepath.Join(ORCAS_CACHE, fmt.Sprintf("%d.jpg", id))
+		f, err := os.OpenFile(toPathJPG, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0666)
 		if err != nil {
 			panic(err)
 		}
 		defer f.Close()
 
-		bufW := bufio.NewWriter(f)
-		defer bufW.Flush()
+		rc, err := previewJPG.Open()
+		if err != nil {
+			util.AbortResponse(ctx, 100, err.Error())
+			return
+		}
 
-		if err = fico.F2ICO(bufW, fromPath, fico.Config{Format: to, Width: int(w), Height: int(h)}); err != nil {
+		defer rc.Close()
+		if _, err = io.Copy(f, rc); err != nil {
+			util.AbortResponse(ctx, 100, err.Error())
+			return
+		}
+
+		fromPath = toPathJPG
+	} else if _, ok := docConvTypes[from]; ok {
+		toPathPNG := filepath.Join(ORCAS_CACHE, fmt.Sprintf("%d.png", id))
+		if err := x2tConv(fromPath, toPathPNG); err != nil {
+			util.AbortResponse(ctx, 100, err.Error())
+			return
+		}
+
+		fromPath = toPathPNG
+	}
+
+	// 如果是获取图标，用f2ico处理
+	if icoTypes[from] {
+		f, err := os.OpenFile(toPath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0666)
+		if err != nil {
+			panic(err)
+		}
+		defer f.Close()
+
+		if err = fico.F2ICO(f, fromPath, fico.Config{Format: to, Width: int(w), Height: int(h)}); err != nil {
 			util.AbortResponse(ctx, 100, err.Error())
 			return
 		}

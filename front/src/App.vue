@@ -47,6 +47,7 @@ const init = () => {
   case 'wps':
   case 'doc':
   case 'docx':
+  case 'xps':
     comp.value = docx;
     break;
   case 'et':
