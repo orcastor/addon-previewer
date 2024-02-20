@@ -222,7 +222,7 @@ require (
 	github.com/orca-zhang/borm v0.0.0-20220921122740-135bb95b3a65 // indirect
 	github.com/orca-zhang/ecache v1.1.1 // indirect
 	github.com/orca-zhang/idgen v0.0.0-20220909041521-2662ff4c3c3e // indirect
-	github.com/orcastor/fico v0.0.0-20240217074226-5afce1bad4fb // indirect
+	github.com/orcastor/fico v0.0.0-20240219155025-27ea15486b86 // indirect
 	github.com/orcastor/iwork-converter v0.0.0-20240210062724-07243beb6209 // indirect
 	github.com/pact-foundation/pact-go v1.0.4 // indirect
 	github.com/pascaldekloe/goe v0.0.0-20180627143212-57f6aae5913c // indirect
