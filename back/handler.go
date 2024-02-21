@@ -38,41 +38,41 @@ func init() {
 var hanlder = core.NewLocalHandler()
 
 var cadTypes = map[string]bool{
-	"dwg": true,
-	"dxf": true,
+	".dwg": true,
+	".dxf": true,
 }
 
 var iworkTypes = map[string]bool{
-	"pages":   true,
-	"numbers": true,
-	"key":     true,
+	".pages":   true,
+	".numbers": true,
+	".key":     true,
 }
 
 var docConvTypes = map[string]string{
-	"dwg": "png",
-	"dxf": "png",
+	".dwg": "png",
+	".dxf": "png",
 
-	"pages":   "html",
-	"numbers": "html",
-	"key":     "html",
+	".pages":   "html",
+	".numbers": "html",
+	".key":     "html",
 
-	"dsp":  "pdf",
-	"ppt":  "pdf",
-	"pptx": "pdf",
+	".dsp":  "pdf",
+	".ppt":  "pdf",
+	".pptx": "pdf",
 
-	"et":  "xlsx",
-	"csv": "xlsx",
-	"xls": "xlsx",
+	".et":  "xlsx",
+	".csv": "xlsx",
+	".xls": "xlsx",
 
-	"wps":    "docx",
-	"doc":    "docx",
-	"txt":    "docx",
-	"json":   "docx",
-	"toml":   "docx",
-	"yaml":   "docx",
-	"xml":    "docx",
-	"config": "docx",
-	"xps":    "docx",
+	".wps":    "docx",
+	".doc":    "docx",
+	".txt":    "docx",
+	".json":   "docx",
+	".toml":   "docx",
+	".yaml":   "docx",
+	".xml":    "docx",
+	".config": "docx",
+	".xps":    "docx",
 }
 
 func get(ctx *gin.Context) {
@@ -80,26 +80,37 @@ func get(ctx *gin.Context) {
 	id, _ := strconv.ParseInt(ctx.Query("i"), 10, 64)
 	langID, _ := strconv.ParseInt(ctx.Query("l"), 10, 64) // 预留的语言id
 
-	from := strings.ToLower(ctx.Query("t")) // from无法注入，不在白名单会直接返回
+	d, name, err := getData(ctx, bktID, id)
+	if err != nil {
+		util.AbortResponse(ctx, 100, err.Error())
+		return
+	}
+
+	from := strings.ToLower(filepath.Ext(name)) // from无法注入，不在白名单会直接返回
 	to := docConvTypes[from]
 	if to == "" {
 		// 不需要转换格式，那就直接写到http
-		if err := writeTo(ctx, bktID, id, ctx.Writer, true); err != nil {
+
+		ctx.Header("Content-Type", "application/octet-stream")
+		ctx.Header("Content-Disposition", fmt.Sprintf("attachment; filename*=utf-8''%s", url.QueryEscape(name)))
+
+		if err := writeTo(ctx, bktID, d, ctx.Writer, true); err != nil {
 			util.AbortResponse(ctx, 100, err.Error())
 		}
 		return
 	}
 
-	fromPath := filepath.Join(ORCAS_CACHE, fmt.Sprintf("%d.%s", id, from)) // id无法注入，强制转成数字
+	fromPath := filepath.Join(ORCAS_CACHE, fmt.Sprintf("%d%s", id, from)) // id无法注入，强制转成数字
 	toPath := filepath.Join(ORCAS_CACHE, fmt.Sprintf("%d.%s", id, to))
 
 	// 先看转换后文件生成了没有
-	if st, err := os.Stat(toPath); err == nil && st.Size() > 0 {
+	st, err := os.Stat(toPath)
+	if err == nil && st.Size() > 0 {
 		goto READ_OUTPUT_FILE
 	}
 
 	// 下载到临时文件
-	if err := download(ctx, bktID, id, fromPath); err != nil {
+	if err := download(ctx, bktID, d, fromPath); err != nil {
 		util.AbortResponse(ctx, 100, err.Error())
 		return
 	}
@@ -220,49 +231,50 @@ func x2tConv(fromPath, toPath string) error {
 }
 
 var icoTypes = map[string]bool{
-	"dmg":     true,
-	"exe":     true,
-	"apk":     true,
-	"ipa":     true,
-	"inf":     true,
-	"ini":     true,
-	"desktop": true,
-	"app":     true,
+	".dmg":     true,
+	".exe":     true,
+	".apk":     true,
+	".ipa":     true,
+	".inf":     true,
+	".ini":     true,
+	".desktop": true,
+	".app":     true,
 }
 
 var thumbSupport = map[string]bool{
-	"csv":  true,
-	"bmp":  true,
-	"raw":  true,
-	"jpg":  true,
-	"jpeg": true,
-	"jpe":  true,
-	"jfif": true,
-	"png":  true,
-	"gif":  true,
-	"tif":  true,
-	"tiff": true,
-	"webp": true,
+	".csv":  true,
+	".bmp":  true,
+	".raw":  true,
+	".jpg":  true,
+	".jpeg": true,
+	".jpe":  true,
+	".jfif": true,
+	".png":  true,
+	".gif":  true,
+	".tif":  true,
+	".tiff": true,
+	".webp": true,
 
-	"mat":  true,
-	"pbm":  true,
-	"pgm":  true,
-	"ppm":  true,
-	"pfm":  true,
-	"pnm":  true,
-	"fits": true,
-	"fit":  true,
-	"fts":  true,
-	"exr":  true,
-	"hdr":  true,
-	"v":    true,
-	"vips": true,
+	".mat":  true,
+	".pbm":  true,
+	".pgm":  true,
+	".ppm":  true,
+	".pfm":  true,
+	".pnm":  true,
+	".fits": true,
+	".fit":  true,
+	".fts":  true,
+	".exr":  true,
+	".hdr":  true,
+	".v":    true,
+	".vips": true,
 }
 
 var showTypes = map[string]bool{
-	"docx": true,
-	"pptx": true,
-	"pdf":  true,
+	".docx": true,
+	".pptx": true,
+	".pdf":  true,
+	".xlsx": true,
 }
 
 var outMimeTypes = map[string]string{
@@ -281,7 +293,13 @@ func thumb(ctx *gin.Context) {
 	w, _ := strconv.ParseInt(ctx.Query("w"), 10, 64)
 	h, _ := strconv.ParseInt(ctx.Query("h"), 10, 64)
 
-	from := strings.ToLower(ctx.Query("t")) // from无法注入，不在白名单会直接返回
+	d, name, err := getData(ctx, bktID, id)
+	if err != nil {
+		util.AbortResponse(ctx, 100, err.Error())
+		return
+	}
+
+	from := strings.ToLower(filepath.Ext(name)) // from无法注入，不在白名单会直接返回
 	if !thumbSupport[from] && !icoTypes[from] && docConvTypes[from] == "" && !showTypes[from] {
 		util.AbortResponse(ctx, 400, "not supported format")
 		return
@@ -296,7 +314,7 @@ func thumb(ctx *gin.Context) {
 		return
 	}
 
-	fromPath := filepath.Join(ORCAS_CACHE, fmt.Sprintf("%d.%s", id, from)) // id无法注入，强制转成数字
+	fromPath := filepath.Join(ORCAS_CACHE, fmt.Sprintf("%d%s", id, from)) // id无法注入，强制转成数字
 	toPath := filepath.Join(ORCAS_CACHE, fmt.Sprintf("%d_%dx%d.%s", id, w, h, to))
 
 	ctx.Header("Content-Type", mimeType)
@@ -308,7 +326,7 @@ func thumb(ctx *gin.Context) {
 	}
 
 	// 下载到临时文件
-	if err := download(ctx, bktID, id, fromPath); err != nil {
+	if err := download(ctx, bktID, d, fromPath); err != nil {
 		util.AbortResponse(ctx, 100, err.Error())
 		return
 	}
@@ -336,7 +354,7 @@ func thumb(ctx *gin.Context) {
 		}
 
 		toPathJPG := filepath.Join(ORCAS_CACHE, fmt.Sprintf("%d.jpg", id))
-		f, err := os.OpenFile(toPathJPG, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0666)
+		f, err := create(toPathJPG)
 		if err != nil {
 			util.AbortResponse(ctx, 100, err.Error())
 			return
@@ -376,7 +394,7 @@ func thumb(ctx *gin.Context) {
 
 	// 如果是获取图标，用f2ico处理
 	if icoTypes[from] {
-		f, err := os.OpenFile(toPath, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0666)
+		f, err := create(toPath)
 		if err != nil {
 			panic(err)
 		}
@@ -428,8 +446,12 @@ func vipsConv(fromPath, toPath string, w, h int64) error {
 	return err
 }
 
-func download(ctx *gin.Context, bktID, id int64, path string) error {
-	f, err := os.OpenFile(path, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
+func create(path string) (*os.File, error) {
+	return os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0666)
+}
+
+func download(ctx *gin.Context, bktID int64, d *core.DataInfo, path string) error {
+	f, err := create(path)
 	if err != nil {
 		return err
 	}
@@ -438,17 +460,17 @@ func download(ctx *gin.Context, bktID, id int64, path string) error {
 	b := bufio.NewWriter(f)
 	defer b.Flush()
 
-	return writeTo(ctx, bktID, id, b, false)
+	return writeTo(ctx, bktID, d, b, false)
 }
 
-func writeTo(ctx *gin.Context, bktID, id int64, writer io.Writer, direct bool) error {
+func getData(ctx *gin.Context, bktID, id int64) (*core.DataInfo, string, error) {
 	o, err := hanlder.Get(ctx.Request.Context(), bktID, []int64{id})
 	if err != nil {
-		return err
+		return nil, "", err
 	}
 
 	if len(o) <= 0 || o[0].Type != core.OBJ_TYPE_FILE {
-		return errors.New("not file")
+		return nil, "", errors.New("not file")
 	}
 
 	dataID := o[0].DataID
@@ -460,10 +482,10 @@ func writeTo(ctx *gin.Context, bktID, id int64, writer io.Writer, direct bool) e
 			Order: "-id",
 		})
 		if err != nil {
-			return err
+			return nil, "", err
 		}
 		if len(os) < 1 {
-			return errors.New("no version")
+			return nil, "", errors.New("no version")
 		}
 		dataID = os[0].DataID
 	}
@@ -474,15 +496,13 @@ func writeTo(ctx *gin.Context, bktID, id int64, writer io.Writer, direct bool) e
 	} else {
 		d, err = hanlder.GetDataInfo(ctx.Request.Context(), bktID, dataID)
 		if err != nil {
-			return err
+			return nil, "", err
 		}
 	}
+	return d, o[0].Name, err
+}
 
-	if direct {
-		ctx.Header("Content-Type", "application/octet-stream")
-		ctx.Header("Content-Disposition", fmt.Sprintf("attachment; filename*=utf-8''%s", url.QueryEscape(o[0].Name)))
-	}
-
+func writeTo(ctx *gin.Context, bktID int64, d *core.DataInfo, writer io.Writer, direct bool) error {
 	acceptEncoding := ctx.Request.Header["Accept-Encoding"]
 
 	var decmpr archiver.Decompressor

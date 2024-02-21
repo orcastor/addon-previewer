@@ -1,5 +1,5 @@
 <template v-loading="isLoading" class="app">
-  <iframe :src="link" :style=iframeStyle() :onload="isLoading = false" frameborder="0" />
+  <iframe :src="link" :style=iframeStyle() :onload="isLoading = false" />
 </template>
 
 <script setup lang="ts">
@@ -17,7 +17,7 @@ onMounted(() => {
 });
 
 const iframeStyle = () => {
-  return 'width:100%; height:'+(100-5500/document.body.clientHeight).toFixed(2)+'vh;';
+  return 'border: 0; width:100%; height:'+(100-5500/document.body.clientHeight).toFixed(2)+'vh;';
 }
 
 const load = async () => {
