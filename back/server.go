@@ -11,7 +11,7 @@ import (
 
 // ORCAS_CACHE=/opt/orcas_cache EGO_DEBUG=true EGO_LOG_EXTRA_KEYS=uid ORCAS_BASE=/opt/orcas ORCAS_DATA=/opt/orcas_disk ORCAS_SECRET=xxxxxxxx egoctl run --runargs --config=config.toml
 // ORCAS_DOCKER_EXEC="docker exec -i <container_id>" ORCAS_CACHE=/opt/orcas_cache EGO_DEBUG=true EGO_LOG_EXTRA_KEYS=uid ORCAS_BASE=/opt/orcas ORCAS_DATA=/opt/orcas_disk ORCAS_SECRET=xxxxxxxx egoctl run --runargs --config=config.toml
-// go run server.go --config=config.toml
+// go run ./... --config=config.toml
 func main() {
 	core.InitDB()
 	if err := ego.New().Serve(func() *egin.Component {
@@ -24,6 +24,7 @@ func main() {
 		api := server.Group("/prvw/api")
 		api.GET("/get", get)
 		api.GET("/thumb/:to", thumb)
+		api.POST("/list", list)
 		return server
 	}()).Run(); err != nil {
 		elog.Panic("startup", elog.Any("err", err))
