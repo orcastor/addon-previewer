@@ -6,7 +6,7 @@ require (
 	github.com/gin-gonic/gin v1.9.1
 	github.com/gotomicro/ego v1.1.19
 	github.com/mholt/archiver/v3 v3.5.1
-	github.com/orcastor/archiver/v4 v4.0.0-alpha.8.12
+	github.com/orcastor/archiver/v4 v4.0.0-alpha.8.13
 	github.com/orcastor/fico v0.0.0-20240221063044-206ccb02009b
 	github.com/orcastor/iwork-converter v0.0.0-20240210062724-07243beb6209
 	github.com/orcastor/orcas v0.0.0-20240222073311-9e008c285011
@@ -185,7 +185,7 @@ require (
 	github.com/julienschmidt/httprouter v1.3.0 // indirect
 	github.com/kisielk/errcheck v1.5.0 // indirect
 	github.com/kisielk/gotool v1.0.0 // indirect
-	github.com/klauspost/compress v1.17.6 // indirect
+	github.com/klauspost/compress v1.17.7 // indirect
 	github.com/klauspost/cpuid v1.2.0 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.4 // indirect
 	github.com/klauspost/pgzip v1.2.6 // indirect

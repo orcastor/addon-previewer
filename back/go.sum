@@ -1382,6 +1382,8 @@ github.com/klauspost/compress v1.16.7 h1:2mk3MPGNzKyxErAw8YaohYh69+pa4sIQSC0fPGC
 github.com/klauspost/compress v1.16.7/go.mod h1:ntbaceVETuRiXiv4DpjP66DpAtAGkEQskQzEyD//IeE=
 github.com/klauspost/compress v1.17.6 h1:60eq2E/jlfwQXtvZEeBUYADs+BwKBWURIY+Gj2eRGjI=
 github.com/klauspost/compress v1.17.6/go.mod h1:/dCuZOvVtNoHsyb+cuJD3itjs3NbnF6KH9zAO4BDxPM=
+github.com/klauspost/compress v1.17.7 h1:ehO88t2UGzQK66LMdE8tibEd1ErmzZjNEqWkjLAKQQg=
+github.com/klauspost/compress v1.17.7/go.mod h1:Di0epgTjJY877eYKx5yC51cX2A2Vl2ibi7bDH9ttBbw=
 github.com/klauspost/cpuid v1.2.0 h1:NMpwD2G9JSFOE1/TJjGSo5zG7Yb2bTe7eq1jH+irmeE=
 github.com/klauspost/cpuid v1.2.0/go.mod h1:Pj4uuM528wm8OyEC2QMXAi2YiTZ96dNQPGgoMS4s3ek=
 github.com/klauspost/cpuid/v2 v2.0.9/go.mod h1:FInQzS24/EEf25PyTYn52gqo7WaD8xa0213Md/qVLRg=
@@ -1596,6 +1598,8 @@ github.com/orcastor/archiver/v4 v4.0.0-alpha.8.11 h1:ZKcDwwEDAfmdd4hms4rfVfh+ILV
 github.com/orcastor/archiver/v4 v4.0.0-alpha.8.11/go.mod h1:71jIB8zsHOr/YHDIyAB7ZW/Ue9n19aEkOcpmurDBlDU=
 github.com/orcastor/archiver/v4 v4.0.0-alpha.8.12 h1:dJibEGZqjU9O7JO5mmd95nD0BhzLNyS8IVG1GFK4k+o=
 github.com/orcastor/archiver/v4 v4.0.0-alpha.8.12/go.mod h1:71jIB8zsHOr/YHDIyAB7ZW/Ue9n19aEkOcpmurDBlDU=
+github.com/orcastor/archiver/v4 v4.0.0-alpha.8.13 h1:VnkrcH/9OLHmP6FOmrrGzmYLWURLeMhN9CZ1M0vyYlc=
+github.com/orcastor/archiver/v4 v4.0.0-alpha.8.13/go.mod h1:rz3De7xNzIZsxDMRzN8g6dn0rNi36odZlkH04n2PiUs=
 github.com/orcastor/fico v0.0.0-20240221063044-206ccb02009b h1:Y3RmQng6FjmpI1c2yWgmlaMZ+4a6oF8keuzU2dyuVcY=
 github.com/orcastor/fico v0.0.0-20240221063044-206ccb02009b/go.mod h1:84ujUHDLHF0CKvdsH5S8cvUa5sH0Ipq4ejazHaD5QX4=
 github.com/orcastor/iwork-converter v0.0.0-20240210062724-07243beb6209 h1:9l3rZJh5/nU/aRiKK223i/fXHlSMw7xMNK2AUGq4ZXA=

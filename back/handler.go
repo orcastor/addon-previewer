@@ -34,7 +34,7 @@ var ORCAS_CACHE = os.Getenv("ORCAS_CACHE")
 
 func init() {
 	if ORCAS_CACHE == "" {
-		ORCAS_CACHE = "/tmp/orcas_cache"
+		ORCAS_CACHE = "/opt/orcas_cache"
 	}
 	os.MkdirAll(ORCAS_CACHE, 0766)
 }
@@ -63,6 +63,7 @@ var docConvTypes = map[string]string{
 	".dsp":  "pdf",
 	".ppt":  "pdf",
 	".pptx": "pdf",
+	".xps":  "pdf",
 
 	".et":  "xlsx",
 	".csv": "xlsx",
@@ -76,7 +77,6 @@ var docConvTypes = map[string]string{
 	".yaml":   "docx",
 	".xml":    "docx",
 	".config": "docx",
-	".xps":    "docx",
 }
 
 func hash(r string) uint64 {
@@ -538,12 +538,16 @@ func fileExists(filePath string) bool {
 }
 
 func download(ctx *gin.Context, bktID int64, d *core.DataInfo, path string) error {
-	f, err := create(path)
+	f, err := create(path + ".tmp")
 	if err != nil {
 		return err
 	}
 	defer f.Close()
-	return writeTo(ctx, bktID, d, f, false)
+
+	if err = writeTo(ctx, bktID, d, f, false); err != nil {
+		return err
+	}
+	return os.Rename(path+".tmp", path)
 }
 
 func getData(ctx *gin.Context, bktID, id int64) (*core.DataInfo, string, error) {
@@ -729,11 +733,6 @@ func zipHandle(ctx *gin.Context, path, route string, langID int64, h func(f fs.F
 	}
 	defer ft.Close()
 
-	st, err := ft.Stat()
-	if err != nil {
-		return err
-	}
-
 	format, _, err := arv4.Identify(filepath.Base(path), ft)
 	if err != nil && !errors.Is(err, arv4.ErrNoMatch) {
 		return err
@@ -753,6 +752,12 @@ func zipHandle(ctx *gin.Context, path, route string, langID int64, h func(f fs.F
 				fff.ContinueOnError = true
 				ff = fff
 			}
+
+			st, err := ft.Stat()
+			if err != nil {
+				return err
+			}
+
 			fsys = arv4.ArchiveFS{Stream: io.NewSectionReader(ft, 0, st.Size()), Format: ff, Context: ctx}
 		default:
 			util.AbortResponse(ctx, 400, "not supported format")

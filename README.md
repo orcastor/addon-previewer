@@ -39,7 +39,7 @@
 
 #### 部署方法：
 
-- 把[back/x2t](https://github.com/orcastor/addon-previewer/tree/main/back/x2t)下的`common`和对应平台（`linux_arm64`/`linux_amd64`/`linux_x86-64`）目录下的文件都拷贝到`/opt/x2t`下
+- 把[back/x2t](https://github.com/orcastor/addon-previewer/tree/main/back/x2t)下的`common`和对应平台（`linux_arm64`/`linux_x64`）目录下的文件都拷贝到`/opt/x2t`下
 - 执行`sh allfontsgen.sh`安装字体文件、生成字体列表
 
 #### 方案优势：
@@ -51,7 +51,7 @@
   - 秒级启动，不需要常驻
 
 - 更小的体积
-  - x2t完整功能支持仅88.8MB：可执行文件31.5MB + 配置文件57.3MB
+  - x2t完整功能支持仅90MB：可执行文件32.9MB + 配置文件57.1MB
     - 对比LibreOffice（6.4.7.2）需要401MB：jvm运行环境179MB + 包222MB（无字体）
   - 字体文件166MB左右：常见字体82.8MB（见core-fonts） + 下载82.9MB（见allfontsgen.sh）
     <details><summary>移除了非中文字体，可按需补回</summary>
@@ -157,7 +157,7 @@
 
 #### 部署方法：
 
-- 把[back/cad2x](https://github.com/orcastor/addon-previewer/tree/main/back/cad2x)下的`common`和对应平台（`linux_arm64`/`linux_amd64`/`linux_x86-64`）目录下的`cad2x`文件都拷贝到`/opt/cad2x`下
+- 把[back/cad2x](https://github.com/orcastor/addon-previewer/tree/main/back/cad2x)下的`common`和对应平台（`linux_arm64`/`linux_x64`）目录下的`cad2x`文件都拷贝到`/opt/cad2x`下
 
 #### 方案优势：
 

@@ -22,6 +22,7 @@ const init = () => {
   case 'ppt':
   case 'pptx':
   case 'pdf':
+  case 'xps':
     comp.value = pdf;
     break;
   case 'jpg':
@@ -47,7 +48,6 @@ const init = () => {
   case 'wps':
   case 'doc':
   case 'docx':
-  case 'xps':
     comp.value = docx;
     break;
   case 'et':
