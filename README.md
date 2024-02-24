@@ -80,7 +80,7 @@
 
 - 更好的兼容性
 
-  - 从[OnlyOffice](https://github.com/onlyoffice/core)最新版本v7.5.1修改
+  - 从[OnlyOffice](https://github.com/onlyoffice/core)最新版本v8.0.0.99修改
   - 举例： 用MacOSX的keynote创建的pptx，OnlyOffice转换没问题，并且展示准确
     - 对比Microsoft Office/WPS打开失败、LibreOffice/OpenOffice转换pdf格式丢失（老版本也打开失败）
   - 插件移除了不常用的djvu、epub、fb2格式
