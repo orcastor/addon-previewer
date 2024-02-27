@@ -21,7 +21,7 @@
 |图片|✅|[el-image](https://element.eleme.cn/#/zh-CN/component/image)|[vips](https://github.com/libvips/libvips)压缩`webp`/(`jpg`+`png`)| png、jpg、gif、bmp、ico、icns、eps、psd等|gif需要处理多帧；vips支持SIMD/OpenMP加速；支持智能裁剪|
 |视频|⌛|[vue-plyr](https://github.com/redxtech/vue-plyr)|[ffmpeg](https://github.com/FFmpeg/FFmpeg)转换成`HLS(m3u8)`|mp4、wmv、mkv等|fps和码率；支持GPU加速（OpenCL/Vulkan等）；可以用方言，比如Rockchip、Mali GPU|
 |音频|⌛|[vue-plyr](https://github.com/redxtech/vue-plyr)|[ffmpeg](https://github.com/FFmpeg/FFmpeg)转码|mp3,wma,wav,ape,flac,ogg,aac等|码率|
-|存档|✅|复用[webapp](https://github.com/orcastor/webapp)|[archiver](https://github.com/mholt/archiver)像FS一样遍历|rar、zip、7z、dmg、iso等|有密码的文档|
+|存档|✅|复用[webapp](https://github.com/orcastor/webapp)|[archiver](https://github.com/mholt/archiver)像FS一样遍历|rar、zip、7z、dmg、iso等|中文乱码；有密码的文档|
 |备份||同存档|imobax & abe|iOS备份目录，安卓备份ab文件等|有密码的备份|
 
 ### 缩略图（文件图标）
@@ -161,18 +161,18 @@
 
 #### 方案优势：
 
+- 更小的体积
+
+  - 去除了GUI部分（界面渲染和跨平台）
+  - 裁剪了大量无用依赖库和代码
+  - 最终二进制文件仅2.9MB
+
 - 更好的兼容性
 
   - 从[LibreCAD](https://github.com/LibreCAD/LibreCAD)最新代码（commit-id：0601535）裁剪
   - 修复编码错误导致乱码问题
   - 支持自动识别横向纵向
   - 支持复用系统和x2t的ttf字体
-
-- 更小的体积
-
-  - 去除了GUI部分（界面渲染和跨平台）
-  - 裁剪了大量无用依赖库和代码
-  - 最终二进制文件仅2.9MB
 
 ## 注意事项：
 - 如果转换插件在docker镜像中部署，需要配置`ORCAS_DOCKER_EXEC="docker exec -i <container_id>"`环境变量，其中`container_id`为容器的id值
