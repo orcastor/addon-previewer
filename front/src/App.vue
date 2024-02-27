@@ -11,6 +11,8 @@ import img from '@/comps/Img.vue';
 import docx from '@/comps/Docx.vue';
 import xlsx from '@/comps/Xlsx.vue';
 import html from '@/comps/Html.vue';
+import video from '@/comps/Video.vue';
+import audio from '@/comps/Audio.vue';
 const comp = shallowRef(none);
 const query = ref('');
 
@@ -64,6 +66,35 @@ const init = () => {
   case 'numbers':
   case 'key':
     comp.value = html;
+    break;
+  case 'mp4':
+  case 'wmv':
+  case 'mkv':
+  case 'avi':
+  case 'mov':
+  case 'webm':
+  case 'flv':
+  case 'mpeg':
+  case 'mpg':
+  case '3gp':
+  case 'asf':
+  case 'rm':
+  case 'rmv':
+  case 'rmvb':
+  case 'm4v':
+  case 'swf':
+    comp.value = video;
+    break;
+  case 'mp3':
+  case 'aac':
+  case 'wav':
+  case 'flac':
+  case 'ogg':
+  case 'm4a':
+  case 'aiff':
+  case 'wma':
+  case 'ape':
+    comp.value = audio;
     break;
   default:
     comp.value = none;
