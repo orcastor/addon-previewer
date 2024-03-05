@@ -52,6 +52,35 @@ var iworkTypes = map[string]bool{
 	".key":     true,
 }
 
+var multimediaTypes = map[string]bool{
+	".mp4":  true,
+	".wmv":  true,
+	".mkv":  true,
+	".avi":  true,
+	".mov":  true,
+	".webm": true,
+	".flv":  true,
+	".mpeg": true,
+	".mpg":  true,
+	".3gp":  true,
+	".asf":  true,
+	".rm":   true,
+	".rmv":  true,
+	".rmvb": true,
+	".m4v":  true,
+	".swf":  true,
+
+	".mp3":  true,
+	".aac":  true,
+	".wav":  true,
+	".flac": true,
+	".ogg":  true,
+	".m4a":  true,
+	".aiff": true,
+	".wma":  true,
+	".ape":  true,
+}
+
 var docConvTypes = map[string]string{
 	".dwg": "png",
 	".dxf": "png",
@@ -77,6 +106,33 @@ var docConvTypes = map[string]string{
 	".yaml":   "docx",
 	".xml":    "docx",
 	".config": "docx",
+
+	".mp4":  "mp4",
+	".wmv":  "mp4",
+	".mkv":  "mp4",
+	".avi":  "mp4",
+	".mov":  "mp4",
+	".webm": "mp4",
+	".flv":  "mp4",
+	".mpeg": "mp4",
+	".mpg":  "mp4",
+	".3gp":  "mp4",
+	".asf":  "mp4",
+	".rm":   "mp4",
+	".rmv":  "mp4",
+	".rmvb": "mp4",
+	".m4v":  "mp4",
+	".swf":  "mp4",
+
+	".mp3":  "mp3",
+	".aac":  "mp3",
+	".wav":  "mp3",
+	".flac": "mp3",
+	".ogg":  "mp3",
+	".m4a":  "mp3",
+	".aiff": "mp3",
+	".wma":  "mp3",
+	".ape":  "mp3",
 }
 
 func hash(r string) uint64 {
@@ -148,6 +204,22 @@ func get(ctx *gin.Context) {
 			}
 		} else if iworkTypes[from] {
 			if err := iwork2htmlConv(fromPath, toPath); err != nil {
+				return err
+			}
+		} else if multimediaTypes[from] {
+			f, err := os.Open(fromPath)
+			if err != nil {
+				return err
+			}
+			defer f.Close()
+
+			w, err := create(toPath)
+			if err != nil {
+				return err
+			}
+			defer w.Close()
+
+			if _, err = io.Copy(w, f); err != nil {
 				return err
 			}
 		} else {

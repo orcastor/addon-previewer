@@ -16,11 +16,11 @@
 |演示|✅|同`pdf`|[x2t](https://github.com/ONLYOFFICE/core)转换成`pdf`|pptx、ppt、dps等|\* 字体问题；有密码文档问题|
 |iWork|✅|h5原生|[iwork2html](https://github.com/orcastor/iwork-converter)转换成`html`|pages、numbers、key等|\* 临时方案|
 |文本|✅|同`docx`|[x2t](https://github.com/ONLYOFFICE/core)转换成`docx`|txt、json/toml/yml/config/xml等|enca/file检测编码防止中文乱码|
-|代码||[prism](https://github.com/egoist/vue-prism-component)|-|cpp、c、h、java、py、go、php、js、html、css等|enca/file检测编码防止中文乱码|
+|代码|⌛|[prism](https://github.com/egoist/vue-prism-component)|-|cpp、c、h、java、py、go、php、js、html、css等|enca/file检测编码防止中文乱码|
 |设计|✅|同图片|[cad2x](https://github.com/orcastor/cad2x-converter)转换成`png`|dwg、dwt、dxf等|\* 字体问题；代码页问题|
 |图片|✅|[el-image](https://element.eleme.cn/#/zh-CN/component/image)|[vips](https://github.com/libvips/libvips)压缩`webp`/(`jpg`+`png`)| png、jpg、gif、bmp、ico、icns、eps、psd等|gif需要处理多帧；vips支持SIMD/OpenMP加速；支持智能裁剪|
-|视频|⌛|[vue-plyr](https://github.com/redxtech/vue-plyr)|[ffmpeg](https://github.com/FFmpeg/FFmpeg)转换成`HLS(m3u8)`|mp4、wmv、mkv等|fps和码率；支持GPU加速（OpenCL/Vulkan等）；可以用方言，比如Rockchip、Mali GPU|
-|音频|⌛|[vue-plyr](https://github.com/redxtech/vue-plyr)|[ffmpeg](https://github.com/FFmpeg/FFmpeg)转码|mp3,wma,wav,ape,flac,ogg,aac等|码率|
+|视频|✅|[vue-plyr](https://github.com/redxtech/vue-plyr)|[ffmpeg](https://github.com/FFmpeg/FFmpeg)转换成`HLS(m3u8)`|mp4、wmv、mkv、avi、mov、webm、flv、mpeg、mpg、3gp、asf、rm、rmv、rmvb、m4v、swf等|fps和码率；支持GPU加速（OpenCL/Vulkan等）；可以用方言，比如Rockchip、Mali GPU|
+|音频|✅|[vue-plyr](https://github.com/redxtech/vue-plyr)|[ffmpeg](https://github.com/FFmpeg/FFmpeg)转码|mp3、aac、wav、flac、ogg、m4a、aiff、wma、ape等|码率|
 |存档|✅|复用[webapp](https://github.com/orcastor/webapp)|[archiver](https://github.com/mholt/archiver)像FS一样遍历|rar、zip、7z、dmg、iso等|中文乱码；有密码的文档|
 |备份||同存档|imobax & abe|iOS备份目录，安卓备份ab文件等|有密码的备份|
 
@@ -32,7 +32,7 @@
 |iWork|✅|zip获取`preview.jpg`|pages、numbers、key等||
 |设计|✅|[cad2x](https://github.com/orcastor/cad2x-converter)转换成`png`|dwg、dwt、dxf等|\* 字体问题；代码页问题|
 |图片|✅|[vips](https://github.com/libvips/libvips)转换`png`| png、jpg、gif、bmp、ico、icns、eps、psd等|gif需要处理多帧；vips支持SIMD/OpenMP加速；支持智能裁剪|
-|视频|⌛|[ffmpeg](https://github.com/FFmpeg/FFmpeg)获取封面|mp4、wmv、mkv等|fps和码率；可以尝试h.265；支持GPU加速（OpenCL/Vulkan）|
+|视频|✅|[ffmpeg](https://github.com/FFmpeg/FFmpeg)获取封面|mp4、wmv、mkv、avi、mov、webm、flv、mpeg、mpg、3gp、asf、rm、rmv、rmvb、m4v、swf等|fps和码率；可以尝试h.265；支持GPU加速（OpenCL/Vulkan）|
 |其他|✅|[fico](https://github.com/orcastor/fico)转换`png`|图标（![](https://raw.githubusercontent.com/drag-and-publish/operating-system-logos/master/src/16x16/WIN.png) ico、![](https://raw.githubusercontent.com/drag-and-publish/operating-system-logos/master/src/16x16/MAC.png) icns）、![](https://raw.githubusercontent.com/drag-and-publish/operating-system-logos/master/src/16x16/WIN.png) Windows可执行文件（exe、dll）、资源文件（mui、mun）、![](https://raw.githubusercontent.com/drag-and-publish/operating-system-logos/master/src/16x16/LIN.png) Linux可执行文件（\*.desktop【\*.AppImage、\*.run】）、📱 手机应用安装包（![](https://raw.githubusercontent.com/drag-and-publish/operating-system-logos/master/src/16x16/AND.png) apk包、![](https://raw.githubusercontent.com/drag-and-publish/operating-system-logos/master/src/16x16/IOS.png) ipa包）、![](https://raw.githubusercontent.com/drag-and-publish/operating-system-logos/master/src/16x16/WIN.png) 文件夹图标（autorun.inf、desktop.ini）、![](https://raw.githubusercontent.com/drag-and-publish/operating-system-logos/master/src/16x16/MAC.png) MacOSX程序（\*.app）|目录图标特殊处理|
 
 ## 关于x2t

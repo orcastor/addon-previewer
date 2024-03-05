@@ -3,7 +3,7 @@
     <audio  controls crossorigin playsinline>
     <source
         :src="source"
-        type="audio /mp3"
+        type="audio/mp3"
       />
     </audio >
   </vue-plyr>
