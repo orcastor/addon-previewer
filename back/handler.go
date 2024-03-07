@@ -167,7 +167,7 @@ func get(ctx *gin.Context) {
 				ctx.Header("Content-Disposition", fmt.Sprintf("attachment; filename*=utf-8''%s", url.QueryEscape(name)))
 				return writeTo(ctx, bktID, d, ctx.Writer, true)
 			}
-			to = from
+			to = from[1:]
 		}
 
 		fromPath := filepath.Join(ORCAS_CACHE, fmt.Sprintf("%d%s", id, oldfrom)) // id无法注入，强制转成数字
@@ -209,7 +209,7 @@ func get(ctx *gin.Context) {
 			if err := iwork2htmlConv(fromPath, toPath); err != nil {
 				return err
 			}
-		} else if multimediaTypes[from] || to == from {
+		} else if multimediaTypes[from] || to == from[1:] {
 			os.Rename(fromPath, toPath)
 		} else {
 			if err := x2tConv(fromPath, toPath); err != nil {

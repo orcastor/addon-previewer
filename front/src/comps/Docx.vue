@@ -26,8 +26,7 @@ const load = async () => {
     url: '//' + location.host + '/prvw/api/get?' + props.query + '&token=' + store.token,
     responseType: 'blob',
   })
-  renderAsync(res.data, refFile.value);
-  isLoading.value = false;
+  renderAsync(res.data, refFile.value).then(_ => isLoading.value = false);
 };
 </script>
 
