@@ -161,10 +161,13 @@ func get(ctx *gin.Context) {
 		from := strings.ToLower(filepath.Ext(name)) // from无法注入，不在白名单会直接返回
 		to := docConvTypes[from]
 		if to == "" {
-			// 不需要转换格式，那就直接写到http
-			ctx.Header("Content-Type", "application/octet-stream")
-			ctx.Header("Content-Disposition", fmt.Sprintf("attachment; filename*=utf-8''%s", url.QueryEscape(name)))
-			return writeTo(ctx, bktID, d, ctx.Writer, true)
+			if r == "" {
+				// 不需要转换格式，那就直接写到http
+				ctx.Header("Content-Type", "application/octet-stream")
+				ctx.Header("Content-Disposition", fmt.Sprintf("attachment; filename*=utf-8''%s", url.QueryEscape(name)))
+				return writeTo(ctx, bktID, d, ctx.Writer, true)
+			}
+			to = from
 		}
 
 		fromPath := filepath.Join(ORCAS_CACHE, fmt.Sprintf("%d%s", id, oldfrom)) // id无法注入，强制转成数字
@@ -206,22 +209,8 @@ func get(ctx *gin.Context) {
 			if err := iwork2htmlConv(fromPath, toPath); err != nil {
 				return err
 			}
-		} else if multimediaTypes[from] {
-			f, err := os.Open(fromPath)
-			if err != nil {
-				return err
-			}
-			defer f.Close()
-
-			w, err := create(toPath)
-			if err != nil {
-				return err
-			}
-			defer w.Close()
-
-			if _, err = io.Copy(w, f); err != nil {
-				return err
-			}
+		} else if multimediaTypes[from] || to == from {
+			os.Rename(fromPath, toPath)
 		} else {
 			if err := x2tConv(fromPath, toPath); err != nil {
 				return err
