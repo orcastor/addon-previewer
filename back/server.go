@@ -9,6 +9,7 @@ import (
 	"github.com/orcastor/orcas/rpc/middleware"
 )
 
+// ORCAS_FFMPEG_HWACCEL="-hwaccel rkmpp -hwaccel_output_format drm_prime -afbc rga"
 // ORCAS_CACHE=/opt/orcas_cache EGO_DEBUG=true EGO_LOG_EXTRA_KEYS=uid ORCAS_BASE=/opt/orcas ORCAS_DATA=/opt/orcas_disk ORCAS_SECRET=xxxxxxxx egoctl run --runargs --config=config.toml
 // ORCAS_DOCKER_EXEC="docker exec -i <container_id>" ORCAS_CACHE=/opt/orcas_cache EGO_DEBUG=true EGO_LOG_EXTRA_KEYS=uid ORCAS_BASE=/opt/orcas ORCAS_DATA=/opt/orcas_disk ORCAS_SECRET=xxxxxxxx egoctl run --runargs --config=config.toml
 // go run ./... --config=config.toml

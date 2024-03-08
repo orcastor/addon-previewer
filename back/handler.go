@@ -30,6 +30,7 @@ import (
 )
 
 var ORCAS_DOCKER_EXEC = os.Getenv("ORCAS_DOCKER_EXEC")
+var ORCAS_FFMPEG_HWACCEL = os.Getenv("ORCAS_FFMPEG_HWACCEL")
 var ORCAS_CACHE = os.Getenv("ORCAS_CACHE")
 
 func init() {
@@ -52,7 +53,7 @@ var iworkTypes = map[string]bool{
 	".key":     true,
 }
 
-var multimediaTypes = map[string]bool{
+var videoTypes = map[string]bool{
 	".mp4":  true,
 	".wmv":  true,
 	".mkv":  true,
@@ -69,7 +70,9 @@ var multimediaTypes = map[string]bool{
 	".rmvb": true,
 	".m4v":  true,
 	".swf":  true,
+}
 
+var audioTypes = map[string]bool{
 	".mp3":  true,
 	".aac":  true,
 	".wav":  true,
@@ -201,7 +204,9 @@ func get(ctx *gin.Context) {
 		}
 
 		// 转换格式
-		if cadTypes[from] {
+		if to == from[1:] {
+			os.Rename(fromPath, toPath)
+		} else if cadTypes[from] {
 			if err := cad2xConv(fromPath, toPath, langID); err != nil {
 				return err
 			}
@@ -209,8 +214,14 @@ func get(ctx *gin.Context) {
 			if err := iwork2htmlConv(fromPath, toPath); err != nil {
 				return err
 			}
-		} else if multimediaTypes[from] || to == from[1:] {
-			os.Rename(fromPath, toPath)
+		} else if videoTypes[from] {
+			if err := ffmpegVideoConv(fromPath, toPath); err != nil {
+				return err
+			}
+		} else if audioTypes[from] {
+			if err := ffmpegAudioConv(fromPath, toPath); err != nil {
+				return err
+			}
 		} else {
 			if err := x2tConv(fromPath, toPath); err != nil {
 				return err
@@ -338,6 +349,45 @@ func x2tConv(fromPath, toPath string) error {
 	cmds := []string{
 		"/opt/x2t/x2t",
 		fromPath,
+		toPath}
+	if ORCAS_DOCKER_EXEC != "" {
+		cmds = append(strings.Split(ORCAS_DOCKER_EXEC, " "), cmds...)
+	}
+	cmd := exec.Command(cmds[0], cmds[1:]...)
+	var out bytes.Buffer
+	cmd.Stdout = &out
+	cmd.Stderr = &out
+	err := cmd.Run()
+	elog.Errorf("x2tConv error: %s %+v", strings.Join(cmds, " "), out.String())
+	return err
+}
+
+func ffmpegVideoConv(fromPath, toPath string) error {
+	cmds := []string{"/opt/ffmpeg/ffmpeg"}
+	if ORCAS_FFMPEG_HWACCEL != "" {
+		cmds = append(cmds, strings.Split(ORCAS_FFMPEG_HWACCEL, " ")...)
+	}
+	cmds = append(cmds, "-i", fromPath,
+		"-c:a", "copy", "-strict", "-2", "-vf", "scale_rkrga=w=1920:h=1080:format=nv12:afbc=1",
+		"-c:v", "h264_rkmpp", "-rc_mode", "VBR", "-b:v", "6M", "-maxrate", "6M", "-bufsize", "12M", "-profile:v", "high", "-g:v", "120", "-y",
+		toPath)
+	if ORCAS_DOCKER_EXEC != "" {
+		cmds = append(strings.Split(ORCAS_DOCKER_EXEC, " "), cmds...)
+	}
+	cmd := exec.Command(cmds[0], cmds[1:]...)
+	var out bytes.Buffer
+	cmd.Stdout = &out
+	cmd.Stderr = &out
+	err := cmd.Run()
+	elog.Errorf("x2tConv error: %s %+v", strings.Join(cmds, " "), out.String())
+	return err
+}
+
+func ffmpegAudioConv(fromPath, toPath string) error {
+	cmds := []string{
+		"/opt/ffmpeg/ffmpeg",
+		"-i", fromPath,
+		"-c:a", "libmp3lame", "-b:a", "128k", "-ar", "44100", "-ac", "2",
 		toPath}
 	if ORCAS_DOCKER_EXEC != "" {
 		cmds = append(strings.Split(ORCAS_DOCKER_EXEC, " "), cmds...)
@@ -523,8 +573,10 @@ func thumb(ctx *gin.Context) {
 				if err := cad2xConv(fromPath, toPathPNG, langID); err != nil {
 					return err
 				}
-
-				fromPath = toPathPNG
+			} else if videoTypes[from] {
+				if err := ffmpegThumb(fromPath, toPathPNG); err != nil {
+					return err
+				}
 			} else if err := x2tConv(fromPath, toPathPNG); err != nil {
 				return err
 			}
@@ -568,6 +620,23 @@ func thumb(ctx *gin.Context) {
 	}(); err != nil {
 		util.AbortResponse(ctx, 100, err.Error())
 	}
+}
+
+func ffmpegThumb(fromPath, toPath string) error {
+	cmds := []string{"/opt/ffmpeg/ffmpeg",
+		"-i", fromPath,
+		"-vf", "thumbnail", "-frames:v", "1",
+		toPath}
+	if ORCAS_DOCKER_EXEC != "" {
+		cmds = append(strings.Split(ORCAS_DOCKER_EXEC, " "), cmds...)
+	}
+	cmd := exec.Command(cmds[0], cmds[1:]...)
+	var out bytes.Buffer
+	cmd.Stdout = &out
+	cmd.Stderr = &out
+	err := cmd.Run()
+	elog.Errorf("ffmpegThumb error: %s %+v", strings.Join(cmds, " "), out.String())
+	return err
 }
 
 func vipsConv(fromPath, toPath string, w, h int64) error {

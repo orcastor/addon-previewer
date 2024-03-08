@@ -174,6 +174,17 @@
   - 支持自动识别横向纵向
   - 支持复用系统和x2t的ttf字体
 
+## 关于ffmpeg
+
+#### 部署方法：
+
+- 普遍安装方式
+  - 使用包安装器或者源码编译安装[ffmpeg](https://github.com/FFmpeg/FFmpeg)，在`/opt/ffmpeg`下创建`/usr/bin/ffmpeg`的软链接
+  
+- Rockchip加速版
+  - 把[back/ffmpeg](https://github.com/orcastor/addon-previewer/tree/main/back/ffmpeg)下的对应平台（`rockchip`）目录下的文件都拷贝到`/opt/ffmpeg`下
+  - 配置类似`ORCAS_FFMPEG_HWACCEL="-hwaccel rkmpp -hwaccel_output_format drm_prime -afbc rga"`环境变量支持硬件加速
+
 ## 注意事项：
 - 如果转换插件在docker镜像中部署，需要配置`ORCAS_DOCKER_EXEC="docker exec -i <container_id>"`环境变量，其中`container_id`为容器的id值
 - 打包后的文件和webapp的放置到一起：
