@@ -7,6 +7,9 @@ import (
 	"encoding/binary"
 	"errors"
 	"fmt"
+	"image"
+	"image/jpeg"
+	_ "image/png"
 	"io"
 	"io/fs"
 	"net/http"
@@ -387,7 +390,7 @@ func ffmpegAudioConv(fromPath, toPath string) error {
 	cmds := []string{
 		"/opt/ffmpeg/ffmpeg",
 		"-i", fromPath,
-		"-c:a", "libmp3lame", "-b:a", "128k", "-ar", "44100", "-ac", "2",
+		"-c:a", "libmp3lame", "-b:a", "128k", "-ar", "44100", "-ac", "2", "-y",
 		toPath}
 	if ORCAS_DOCKER_EXEC != "" {
 		cmds = append(strings.Split(ORCAS_DOCKER_EXEC, " "), cmds...)
@@ -595,6 +598,32 @@ func thumb(ctx *gin.Context) {
 			if err = fico.F2ICO(f, fromPath, fico.Config{Format: to, Width: int(w), Height: int(h)}); err != nil {
 				return err
 			}
+		} else if w == 0 && h == 0 { // 用在视频取第一帧
+			if to == "jpg" || to == "jpeg" {
+				f, err := os.Open(fromPath)
+				if err != nil {
+					return err
+				}
+				defer f.Close()
+
+				img, _, err := image.Decode(f)
+				if err != nil {
+					return err
+				}
+
+				var buf bytes.Buffer
+				jpeg.Encode(&buf, img, &jpeg.Options{Quality: 75})
+
+				w, err := create(toPath)
+				if err != nil {
+					return err
+				}
+				defer w.Close()
+
+				_, _ = w.Write(buf.Bytes())
+			} else { // PNG
+				os.Rename(fromPath, toPath)
+			}
 		} else if err := vipsConv(fromPath, toPath, w, h); err != nil {
 			// 转换缩略图
 			return err
@@ -623,9 +652,8 @@ func thumb(ctx *gin.Context) {
 }
 
 func ffmpegThumb(fromPath, toPath string) error {
-	cmds := []string{"/opt/ffmpeg/ffmpeg",
-		"-i", fromPath,
-		"-vf", "thumbnail", "-frames:v", "1",
+	cmds := []string{"/opt/ffmpeg/ffmpeg", "-i", fromPath,
+		"-vf", "thumbnail", "-frames:v", "1", "-y",
 		toPath}
 	if ORCAS_DOCKER_EXEC != "" {
 		cmds = append(strings.Split(ORCAS_DOCKER_EXEC, " "), cmds...)
@@ -640,10 +668,15 @@ func ffmpegThumb(fromPath, toPath string) error {
 }
 
 func vipsConv(fromPath, toPath string, w, h int64) error {
+	if strings.HasSuffix(toPath, ".jpg") {
+		toPath += "[Q=90,optimize_coding,keep=none]"
+	} else {
+		toPath += "[keep=none]"
+	}
 	cmds := []string{"/opt/vips/vipsthumbnail", fromPath,
 		"--size", fmt.Sprintf("%dx%d", w, h),
 		"--smartcrop", "attention",
-		"-o", toPath + "[keep=none]"}
+		"-o", toPath}
 	if ORCAS_DOCKER_EXEC != "" {
 		cmds = append(strings.Split(ORCAS_DOCKER_EXEC, " "), cmds...)
 	}

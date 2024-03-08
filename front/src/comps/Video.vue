@@ -1,6 +1,6 @@
 <template v-loading="isLoading" class="app">
   <vue-plyr>
-    <video controls crossorigin playsinline :data-poster="poster">
+    <video controls crossorigin playsinline :poster="poster">
       <source
         :src="source"
         type="video/mp4"
@@ -21,7 +21,7 @@ const poster = ref('');
 const source = ref('');
 
 onMounted(() => {
-  poster.value = `//${location.host}/prvw/api/thumb/png?${props.query}&w=1024&h=768&token=${store.token}`;
+  poster.value = `//${location.host}/prvw/api/thumb/jpg?${props.query}&token=${store.token}`;
   source.value = `//${location.host}/prvw/api/get?${props.query}&token=${store.token}`;
 });
 
