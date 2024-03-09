@@ -208,7 +208,9 @@ func get(ctx *gin.Context) {
 
 		// 转换格式
 		if to == from[1:] {
-			os.Rename(fromPath, toPath)
+			if fromPath != toPath {
+				os.Rename(fromPath, toPath)
+			}
 		} else if cadTypes[from] {
 			if err := cad2xConv(fromPath, toPath, langID); err != nil {
 				return err
@@ -232,7 +234,9 @@ func get(ctx *gin.Context) {
 		}
 
 		// 删除临时文件
-		os.Remove(fromPath)
+		if r == "" {
+			os.Remove(fromPath)
+		}
 
 	READ_OUTPUT_FILE:
 		ft, err := os.Open(toPath)
@@ -705,11 +709,13 @@ func download(ctx *gin.Context, bktID int64, d *core.DataInfo, path string) erro
 	if err != nil {
 		return err
 	}
-	defer f.Close()
 
 	if err = writeTo(ctx, bktID, d, f, false); err != nil {
+		f.Close()
 		return err
 	}
+	f.Close()
+
 	return os.Rename(path+".tmp", path)
 }
 
