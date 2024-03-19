@@ -22,7 +22,6 @@
 |视频|✅|[vue-plyr](https://github.com/redxtech/vue-plyr)|[ffmpeg](https://github.com/FFmpeg/FFmpeg)转换成`HLS(m3u8)`|mp4、wmv、mkv、avi、mov、webm、flv、mpeg、mpg、3gp、asf、rm、rmv、rmvb、m4v、swf等|fps和码率；支持GPU加速（OpenCL/Vulkan等）；可以用方言，比如Rockchip、Mali GPU|
 |音频|✅|[vue-plyr](https://github.com/redxtech/vue-plyr)|[ffmpeg](https://github.com/FFmpeg/FFmpeg)转码|mp3、aac、wav、flac、ogg、m4a、aiff、wma、ape等|码率|
 |存档|✅|复用[webapp](https://github.com/orcastor/webapp)|[archiver](https://github.com/mholt/archiver)像FS一样遍历|rar、zip、7z、dmg、iso等|中文乱码；有密码的文档|
-|备份||同存档|imobax & abe|iOS备份目录，安卓备份ab文件等|有密码的备份|
 
 ### 缩略图（文件图标）
 
