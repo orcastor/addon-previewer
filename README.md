@@ -16,7 +16,7 @@
 |演示|✅|同`pdf`|[x2t](https://github.com/ONLYOFFICE/core)转换成`pdf`|pptx、ppt、dps等|\* 字体问题；有密码文档问题|
 |iWork|✅|h5原生|[iwork2html](https://github.com/orcastor/iwork-converter)转换成`html`|pages、numbers、key等|\* 临时方案|
 |文本|✅|同`docx`|[x2t](https://github.com/ONLYOFFICE/core)转换成`docx`|txt、json/toml/yml/config/xml等|enca/file检测编码防止中文乱码|
-|代码|⌛|[prism](https://github.com/egoist/vue-prism-component)|-|cpp、c、h、java、py、go、php、js、html、css等|enca/file检测编码防止中文乱码|
+|代码||[prism](https://github.com/egoist/vue-prism-component)|-|cpp、c、h、java、py、go、php、js、html、css等|enca/file检测编码防止中文乱码|
 |设计|✅|同图片|[cad2x](https://github.com/orcastor/cad2x-converter)转换成`png`|dwg、dwt、dxf等|\* 字体问题；代码页问题|
 |图片|✅|[el-image](https://element.eleme.cn/#/zh-CN/component/image)|[vips](https://github.com/libvips/libvips)压缩`webp`/(`jpg`+`png`)| png、jpg、gif、bmp、ico、icns、eps、psd等|gif需要处理多帧；vips支持SIMD/OpenMP加速；支持智能裁剪|
 |视频|✅|[vue-plyr](https://github.com/redxtech/vue-plyr)|[ffmpeg](https://github.com/FFmpeg/FFmpeg)转码+支持随机读(Range:bytes)|mp4、wmv、mkv、avi、mov、webm、flv、mpeg、mpg、3gp、asf、rm、rmv、rmvb、m4v、swf等|fps和码率；支持GPU加速（OpenCL/Vulkan等）；可以用方言，比如Rockchip、Mali GPU|
