@@ -32,9 +32,9 @@ import (
 	arv4 "github.com/orcastor/archiver/v4"
 )
 
+var ORCAS_CACHE = os.Getenv("ORCAS_CACHE")
 var ORCAS_DOCKER_EXEC = os.Getenv("ORCAS_DOCKER_EXEC")
 var ORCAS_FFMPEG_HWACCEL = os.Getenv("ORCAS_FFMPEG_HWACCEL")
-var ORCAS_CACHE = os.Getenv("ORCAS_CACHE")
 
 func init() {
 	if ORCAS_CACHE == "" {
