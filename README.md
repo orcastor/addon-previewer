@@ -1,10 +1,10 @@
 <p align="center">
   <a href="https://orcastor.github.io/doc/">
     <img src="https://orcastor.github.io/doc/logo.svg">
-  </a><a href="https://jb.gg/OpenSourceSupport">Supported by <img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jetbrains.png?_gl=1*nba8r7*_ga*MTc4MjEwNTkzOS4xNzE0MjM1MDkz*_ga_9J976DJZ68*MTcxNDg5OTc0NS4zLjEuMTcxNDg5OTc2OS4zNi4wLjA.&_ga=2.101520707.337805047.1714899746-1782105939.1714235093" width="8%" /></a>
+  </a>
 </p>
 
-<p align="center"><strong>OrcaS 文档预览插件</strong></p>
+<h1 align="center"><strong>OrcaS 文档预览插件</strong><sup><a href="https://jb.gg/OpenSourceSupport"> via <img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jetbrains.png?_gl=1*nba8r7*_ga*MTc4MjEwNTkzOS4xNzE0MjM1MDkz*_ga_9J976DJZ68*MTcxNDg5OTc0NS4zLjEuMTcxNDg5OTc2OS4zNi4wLjA.&_ga=2.101520707.337805047.1714899746-1782105939.1714235093" width="12%" /></a></sup></h1>
 
 <p align="center">—— 基于h5，纯离线本地版，效果和兼容性更好，可自行适配存储 ——</p>
 
