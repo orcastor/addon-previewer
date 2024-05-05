@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://orcastor.github.io/doc/">
-    <img src="https://orcastor.github.io/doc/logo.svg">
+    <img src="https://orcastor.github.io/doc/logo.svg">Supported by <img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jetbrains.png?_gl=1*nba8r7*_ga*MTc4MjEwNTkzOS4xNzE0MjM1MDkz*_ga_9J976DJZ68*MTcxNDg5OTc0NS4zLjEuMTcxNDg5OTc2OS4zNi4wLjA.&_ga=2.101520707.337805047.1714899746-1782105939.1714235093" width="8%" />
   </a>
 </p>
 
