@@ -8,7 +8,7 @@
 
 <p align="center">—— 基于h5，纯离线本地版，效果和兼容性更好，可自行适配存储 ——</p>
 
-|类型|进度|展示|兼容转换方案|支持格式|注意事项|
+|类型|进度|展示方案|兼容转换方案|支持格式|注意事项|
 |-|-|-|-|-|-|
 |pdf|✅|[vue-pdf-embed](https://github.com/hrynko/vue-pdf-embed)|-| pdf|支持有密码文件|
 |文字|✅|[docxjs](https://www.npmjs.com/package/docx-preview)|[x2t](https://github.com/ONLYOFFICE/core)转换成`docx`|docx、doc、wps等|\* 字体问题；有密码文档问题|
